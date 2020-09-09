@@ -1,4 +1,4 @@
-package fr.jeanjacquelin.kingofheroes
+package fr.learnandrun.kingofheroes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package fr.jeanjacquelin.kingofheroes
+package fr.learnandrun.kingofheroes
 
 import org.junit.Test
 
