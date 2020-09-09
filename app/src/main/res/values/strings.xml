@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">King Of Heroes</string>
+    <string name="black_panther">Black Panther</string>
+    <string name="dr_strange">Dr. Strange</string>
+    <string name="black_widow">Black Widow</string>
+    <string name="star_lord">Star Lord</string>
+    <string name="thor">Thor</string>
 </resources>
