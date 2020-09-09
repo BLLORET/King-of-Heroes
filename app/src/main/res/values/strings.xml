@@ -5,4 +5,19 @@
     <string name="black_widow">Black Widow</string>
     <string name="star_lord">Star Lord</string>
     <string name="thor">Thor</string>
+    <string name="ant_man">Ant-Man</string>
+    <string name="aquaman">Aquaman</string>
+    <string name="batman">Batman</string>
+    <string name="captain_america">Captain America</string>
+    <string name="captain_marvel">Captain Marvel</string>
+    <string name="deadpool">Deadpool</string>
+    <string name="groot">Groot</string>
+    <string name="hawkeye">Hawkeye</string>
+    <string name="hulk">Hulk</string>
+    <string name="iron_man">Iron Man</string>
+    <string name="joker">Joker</string>
+    <string name="rocket_raccoon">Rocket Raccoon</string>
+    <string name="spider_man">Spider-Man</string>
+    <string name="superman">Superman</string>
+    <string name="wonder_woman">Wonder Woman</string>
 </resources>
