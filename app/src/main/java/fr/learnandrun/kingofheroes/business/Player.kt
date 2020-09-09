@@ -1,8 +1,10 @@
 package fr.learnandrun.kingofheroes.business
 
+import fr.learnandrun.kingofheroes.business.dice.Dice
+import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.tools.delegate.RangeDelegate
 
-class Player(
+abstract class Player(
     val hero: Hero
 ) {
     var health: Int by RangeDelegate(DEFAULT_HEALTH, MIN_HEALTH, MAX_HEALTH)
@@ -13,6 +15,8 @@ class Player(
 
     fun hasEnoughPointsToWin() = victoryPoints == MAX_POINTS
 
+    abstract fun rollDice(): DiceFace
+
     companion object {
         const val DEFAULT_HEALTH = 10
         const val MIN_HEALTH = 0
@@ -21,5 +25,12 @@ class Player(
         const val DEFAULT_POINTS = 0
         const val MIN_POINTS = 0
         const val MAX_POINTS = 20
+
+        //TODO: check if Player. is needed
+        fun Player.defaultRollDice(): DiceFace {
+            val diceFaceResult = Dice.roll()
+            //TODO: play an animation with diceFaceResult and wait until it ends
+            return diceFaceResult
+        }
     }
 }
