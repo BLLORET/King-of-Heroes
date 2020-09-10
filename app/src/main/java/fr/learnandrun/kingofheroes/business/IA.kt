@@ -6,6 +6,6 @@ class IA(
     hero: Hero
 ) : Player(hero) {
 
-    override fun rollDice(): DiceFace = defaultRollDice()
+    override suspend fun rollDice(): DiceFace = defaultRollDice()
 
 }

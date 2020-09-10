@@ -15,7 +15,7 @@ abstract class Player(
 
     fun hasEnoughPointsToWin() = victoryPoints == MAX_POINTS
 
-    abstract fun rollDice(): DiceFace
+    abstract suspend fun rollDice(): DiceFace
 
     companion object {
         const val DEFAULT_HEALTH = 10
@@ -27,7 +27,7 @@ abstract class Player(
         const val MAX_POINTS = 20
 
         //TODO: check if Player. is needed
-        fun Player.defaultRollDice(): DiceFace {
+        suspend fun Player.defaultRollDice(): DiceFace {
             val diceFaceResult = Dice.roll()
             //TODO: play an animation with diceFaceResult and wait until it ends
             return diceFaceResult
