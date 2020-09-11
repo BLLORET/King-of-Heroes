@@ -8,7 +8,7 @@ class User(
 ) : Player(board, hero) {
 
     override suspend fun rollDices(numberOfDice: Int): List<DiceFace> {
-        board.showRollDiceButton()
+        board.boardViewModel.showRollDiceButton()
         return defaultRollDice(numberOfDice)
     }
 }

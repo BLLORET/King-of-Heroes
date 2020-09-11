@@ -89,7 +89,7 @@ class Board(
         for (player in turnLoop) {
             boardViewModel.playerTurnStart(player)
 
-            //TODO
+            playTurn(player)
 
             if (playerHasWon(player)) {
                 boardViewModel.playerHasWon(player)
@@ -108,18 +108,7 @@ class Board(
                         players.filter { it != player }.all { it.isDead() })
 
     private suspend fun playTurn(player: Player) {
-        val diceFaceResults = mutableListOf<DiceFace>()
-
-    }
-
-    /* Events */
-
-    suspend fun showRollDiceButton() {
-        boardViewModel.showRollDiceButton()
-    }
-
-    suspend fun showRollDiceAnimation(diceFaceResults: List<DiceFace>) {
-        boardViewModel.showRollDiceAnimation(diceFaceResults)
+        TODO(player.toString())
     }
 
     /* Companion Object */

@@ -31,7 +31,7 @@ abstract class Player(
             val diceFaceResults = generateSequence { Dice.roll() }
                 .take(numberOfDice)
                 .toList()
-            board.showRollDiceAnimation(diceFaceResults)
+            board.boardViewModel.showRollDiceAnimation(diceFaceResults)
             return diceFaceResults
         }
     }
