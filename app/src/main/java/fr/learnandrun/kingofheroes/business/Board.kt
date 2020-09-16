@@ -131,7 +131,7 @@ class Board(
         }
     }
 
-    private suspend fun rollDices(player: Player): List<DiceFace?> {
+    private suspend fun rollDices(player: Player): List<DiceFace> {
         var tryRemaining = 3
         val dices: MutableList<DiceFace?> = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
 
@@ -148,7 +148,7 @@ class Board(
             }
 
             // display the dices interface
-            boardViewModel.showRollDicesAnimation(dices)
+            boardViewModel.showRollDicesAnimation(dices.filterNotNull())
 
             // will set at null the dices to re roll
             player.waitForReRollOrPassClick(dices)
@@ -160,15 +160,15 @@ class Board(
         }
 
         // display the dices interface
-        boardViewModel.showRollDicesAnimation(dices)
+        boardViewModel.showRollDicesAnimation(dices.filterNotNull())
 
         // button to end the roll dices phase
         player.waitForEndRollClick()
 
-        return dices
+        return dices.filterNotNull()
     }
 
-    private suspend fun resolveDices(dices: List<DiceFace?>, player: Player) {
+    private suspend fun resolveDices(dices: List<DiceFace>, player: Player) {
         var numberOfOne = 0
         var numberOfTwo = 0
         var numberOfThree = 0

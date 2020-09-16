@@ -30,7 +30,7 @@ class BoardViewModel(
         board.waitForResume()
         //TODO: And then the button will board.resumeGame()
     }
-    suspend fun showRollDicesAnimation(diceFaceResults: List<DiceFace?>) = waitIfPauseable {
+    suspend fun showRollDicesAnimation(diceFaceResults: List<DiceFace>) = waitIfPauseable {
         // TODO: play animation
         //  maybe wou will need delay(TIME) or board.waitForResume() and board.resumeGame()
     }
