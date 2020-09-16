@@ -38,4 +38,7 @@
     <string name="stamina_logo">Stamina Logo</string>
     <string name="life_logo">Life logo</string>
     <string name="victory_logo">Victory logo</string>
+    <string name="play">Play</string>
+    <string name="content_description_home_image">Background of the application</string>
+
 </resources>
