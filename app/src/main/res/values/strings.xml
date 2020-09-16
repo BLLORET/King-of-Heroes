@@ -20,4 +20,6 @@
     <string name="spider_man">Spider-Man</string>
     <string name="superman">Superman</string>
     <string name="wonder_woman">Wonder Woman</string>
+    <string name="play">Play</string>
+    <string name="content_description_home_image">Background of the application</string>
 </resources>
