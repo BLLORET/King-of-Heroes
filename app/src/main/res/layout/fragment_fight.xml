@@ -57,36 +57,17 @@
         app:layout_constraintLeft_toRightOf="@+id/fight_fighter_top_left_name_text_view"
         app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_name_text_view" />
 
-    <ImageView
+    <fr.learnandrun.kingofheroes.ui.view.Stats
         android:id="@+id/fight_fighter_top_left_victory_image_view"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/card_fighter"
-        android:src="@drawable/star"
-        app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_top_left_victory_content_text_view"
         app:layout_constraintStart_toStartOf="@+id/fight_fighter_top_left_card_image_view"
-        app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_victory_content_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/fight_fighter_top_left_name_text_view"
 
-    <TextView
-        android:id="@+id/fight_fighter_top_left_victory_content_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/zero_value"
-        app:layout_constraintStart_toEndOf="@+id/fight_fighter_top_left_victory_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/fight_fighter_top_left_name_text_view" />
-
-    <TextView
-        android:id="@+id/fight_fighter_top_left_victory_label_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/max_victory_points"
-        app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_top_left_victory_content_text_view"
-        app:layout_constraintStart_toEndOf="@+id/fight_fighter_top_left_victory_content_text_view"
-        app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_victory_content_text_view" />
+        />
 
     <TextView
         android:id="@+id/fight_fighter_bottom_left_victory_label_text_view"
@@ -97,59 +78,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_bottom_left_victory_content_text_view"
         app:layout_constraintStart_toEndOf="@+id/fight_fighter_bottom_left_victory_content_text_view"
         app:layout_constraintTop_toTopOf="@+id/fight_fighter_bottom_left_victory_content_text_view" />
-
-    <ImageView
-        android:id="@+id/fight_fighter_top_left_life_image_view"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:contentDescription="@string/card_fighter"
-        android:src="@drawable/life"
-        app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_top_left_life_content_text_view"
-        app:layout_constraintEnd_toEndOf="@+id/fight_fighter_top_left_victory_image_view"
-        app:layout_constraintStart_toStartOf="@+id/fight_fighter_top_left_victory_image_view"
-        app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_life_content_text_view" />
-
-    <TextView
-        android:id="@+id/fight_fighter_top_left_life_content_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/zero_value"
-        app:layout_constraintStart_toEndOf="@+id/fight_fighter_top_left_life_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/fight_fighter_top_left_victory_content_text_view" />
-
-    <TextView
-        android:id="@+id/fight_fighter_top_left_life_label_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/max_life"
-        app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_top_left_life_content_text_view"
-        app:layout_constraintStart_toEndOf="@+id/fight_fighter_top_left_life_content_text_view"
-        app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_life_content_text_view" />
-
-    <ImageView
-        android:id="@+id/fight_fighter_top_left_stamina_image_view"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:contentDescription="@string/card_fighter"
-        android:src="@drawable/stamina"
-        app:layout_constraintBottom_toBottomOf="@+id/fight_fighter_top_left_stamina_content_text_view"
-        app:layout_constraintEnd_toEndOf="@+id/fight_fighter_top_left_victory_image_view"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fight_fighter_top_left_victory_image_view"
-        app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_stamina_content_text_view" />
-
-    <TextView
-        android:id="@+id/fight_fighter_top_left_stamina_content_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/zero_value"
-        app:layout_constraintStart_toEndOf="@+id/fight_fighter_top_left_stamina_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/fight_fighter_top_left_life_content_text_view" />
 
     <ImageView
         android:id="@+id/fight_fighter_top_right_card_image_view"
