@@ -27,8 +27,16 @@ class Stats(
         val attributes: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.Stats)
 
         victory = MutableLiveData(attributes.getInt(R.styleable.Stats_victory, 0))
-        life = MutableLiveData(attributes.getInt(R.styleable.Stats_life, 0))
+        life = MutableLiveData(attributes.getInt(R.styleable.Stats_life, 10))
         stamina = MutableLiveData(attributes.getInt(R.styleable.Stats_stamina, 0))
+
+
+        stats_victory_value_text_view.text =
+            context.getString(R.string.max_victory_points, victory.value)
+        stats_life_value_text_view.text =
+            context.getString(R.string.max_life, life.value)
+        stats_stamina_value_text_view.text =
+            stamina.value.toString()
 
         attributes.recycle()
     }
@@ -41,7 +49,7 @@ class Stats(
             stats_life_value_text_view.text = context.getString(R.string.max_life, it)
         }
         stamina.observe(lifecycleOwner) {
-            stats_victory_value_text_view.text = it.toString()
+            stats_stamina_value_text_view.text = it.toString()
         }
     }
 }
