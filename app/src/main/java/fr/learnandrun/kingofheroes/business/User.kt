@@ -7,8 +7,23 @@ class User(
     hero: Hero
 ) : Player(board, hero) {
 
-    override suspend fun rollDices(numberOfDice: Int): List<DiceFace> {
-        board.boardViewModel.showRollDiceButton()
-        return defaultRollDice(numberOfDice)
+    override suspend fun showRollDicesButton() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun waitForRollClick() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun waitForReRollOrPassClick(dices: MutableList<DiceFace?>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun waitForEndRollClick() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun decreaseHealth(value: Int) {
+        TODO("Not yet implemented")
     }
 }

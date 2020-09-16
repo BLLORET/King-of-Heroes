@@ -22,13 +22,15 @@ class BoardViewModel(
         //TODO play animation: Game has ended
     }
 
+    suspend fun showRollDicesInterface() = waitIfPauseable {
+        //TODO: display interface over the game board interface (empty dices)
+    }
     suspend fun showRollDiceButton() = waitIfPauseable {
         //TODO: Display the button to roll dice
         board.waitForResume()
         //TODO: And then the button will board.resumeGame()
     }
-
-    suspend fun showRollDiceAnimation(diceFaceResults: List<DiceFace>) = waitIfPauseable {
+    suspend fun showRollDicesAnimation(diceFaceResults: List<DiceFace?>) = waitIfPauseable {
         // TODO: play animation
         //  maybe wou will need delay(TIME) or board.waitForResume() and board.resumeGame()
     }
