@@ -61,12 +61,14 @@
         android:id="@+id/fight_fighter_top_left_victory_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="32dp"
         android:layout_marginTop="10dp"
-        android:contentDescription="@string/card_fighter"
+
+        app:life="10"
+
         app:layout_constraintStart_toStartOf="@+id/fight_fighter_top_left_card_image_view"
         app:layout_constraintTop_toBottomOf="@id/fight_fighter_top_left_name_text_view"
-
         />
 
     <TextView
