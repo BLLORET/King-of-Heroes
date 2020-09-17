@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparentGray"
+    tools:context=".ui.dice_screen.DiceFragment">
+
+    <Button
+        android:id="@+id/dice_btn_throw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_rounded"
+        android:fontFamily="@font/marvel"
+        android:padding="10dp"
+        android:text="@string/btn_throw"
+        android:textColor="#FFB751"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/dice_turn_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dice_turn_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/marvel"
+        android:text="@string/dice_turn"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_1"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintEnd_toStartOf="@+id/dice_img_btn_dice_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/bolt" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintBottom_toBottomOf="@+id/dice_img_btn_dice_1"
+        app:layout_constraintEnd_toStartOf="@+id/dice_img_btn_dice_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_img_btn_dice_1"
+        app:layout_constraintTop_toTopOf="@+id/dice_img_btn_dice_1"
+        tools:src="@drawable/bolt" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_3"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintBottom_toBottomOf="@+id/dice_img_btn_dice_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_img_btn_dice_2"
+        app:layout_constraintTop_toTopOf="@+id/dice_img_btn_dice_2"
+        tools:src="@drawable/bolt" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_4"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintEnd_toStartOf="@+id/dice_img_btn_dice_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dice_img_btn_dice_1"
+        tools:src="@drawable/bolt" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_5"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintBottom_toBottomOf="@+id/dice_img_btn_dice_4"
+        app:layout_constraintEnd_toStartOf="@+id/dice_img_btn_dice_6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_img_btn_dice_4"
+        app:layout_constraintTop_toTopOf="@+id/dice_img_btn_dice_4"
+        tools:src="@drawable/bolt" />
+
+    <ImageButton
+        android:id="@+id/dice_img_btn_dice_6"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/img_desc_Dice"
+        android:tint="#80BBBBBB"
+        app:layout_constraintBottom_toBottomOf="@+id/dice_img_btn_dice_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_img_btn_dice_5"
+        app:layout_constraintTop_toTopOf="@+id/dice_img_btn_dice_5"
+        tools:src="@drawable/bolt" />
+
+    <TextView
+        android:id="@+id/dice_fighter_top_left_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/marvel"
+        android:text="@string/ant_man"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/dice_fighter_top_right_text_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dice_img_btn_dice_4" />
+
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
+        android:id="@+id/dice_fighter_top_left_stats_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/dice_fighter_top_left_text_view"
+        app:layout_constraintStart_toStartOf="@+id/dice_fighter_top_left_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/dice_fighter_top_left_text_view" />
+
+    <TextView
+        android:id="@+id/dice_fighter_top_right_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/marvel"
+        android:text="@string/ant_man"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_fighter_top_left_text_view"
+        app:layout_constraintTop_toTopOf="@+id/dice_fighter_top_left_text_view" />
+
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
+        android:id="@+id/dice_fighter_top_right_stats_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/dice_fighter_top_right_text_view"
+        app:layout_constraintStart_toStartOf="@+id/dice_fighter_top_right_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/dice_fighter_top_right_text_view" />
+
+    <TextView
+        android:id="@+id/dice_fighter_bottom_left_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/marvel"
+        android:text="@string/ant_man"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/dice_btn_throw"
+        app:layout_constraintEnd_toStartOf="@+id/dice_fighter_bottom_right_text_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
+        android:id="@+id/dice_fighter_bottom_left_stats_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/dice_fighter_bottom_left_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/dice_fighter_bottom_left_text_view"
+        app:layout_constraintStart_toStartOf="@+id/dice_fighter_bottom_left_text_view" >
+
+    </fr.learnandrun.kingofheroes.ui.view.StatsView>
+
+    <TextView
+        android:id="@+id/dice_fighter_bottom_right_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/marvel"
+        android:text="@string/ant_man"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dice_fighter_bottom_left_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dice_fighter_bottom_left_text_view"
+        app:layout_constraintTop_toTopOf="@+id/dice_fighter_bottom_left_text_view" />
+
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
+        android:id="@+id/dice_fighter_bottom_right_stats_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/dice_fighter_bottom_right_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/dice_fighter_bottom_right_text_view"
+        app:layout_constraintStart_toStartOf="@+id/dice_fighter_bottom_right_text_view" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

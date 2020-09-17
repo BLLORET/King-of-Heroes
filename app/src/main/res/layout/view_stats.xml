@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:background="@android:color/transparent">
+
+
+    <ImageView
+        android:id="@+id/stats_victory_image_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+
+
+        android:layout_margin="4dp"
+        android:contentDescription="@string/victory_logo"
+
+        android:src="@drawable/star"
+
+        app:layout_constraintEnd_toStartOf="@id/stats_victory_value_text_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/stats_victory_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="4dp"
+
+        android:text="@string/max_victory_points"
+        app:layout_constraintBottom_toBottomOf="@+id/stats_victory_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stats_victory_image_view"
+        app:layout_constraintTop_toTopOf="@+id/stats_victory_image_view" />
+
+    <ImageView
+        android:id="@+id/stats_life_image_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+
+        android:layout_margin="4dp"
+
+        android:contentDescription="@string/life_logo"
+
+        android:src="@drawable/life"
+        app:layout_constraintEnd_toEndOf="@+id/stats_victory_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/stats_victory_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/stats_victory_image_view" />
+
+    <TextView
+        android:id="@+id/stats_life_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="4dp"
+
+        android:text="@string/max_life"
+        app:layout_constraintBottom_toBottomOf="@+id/stats_life_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/stats_victory_value_text_view"
+        app:layout_constraintStart_toStartOf="@+id/stats_victory_value_text_view"
+        app:layout_constraintTop_toTopOf="@+id/stats_life_image_view" />
+
+
+    <ImageView
+        android:id="@+id/stats_stamina_image_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+
+        android:layout_margin="4dp"
+        android:contentDescription="@string/stamina_logo"
+
+        android:src="@drawable/stamina"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/stats_life_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/stats_life_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/stats_life_image_view" />
+
+
+    <TextView
+        android:id="@+id/stats_stamina_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="4dp"
+
+        android:text="@string/zero_value"
+        app:layout_constraintBottom_toBottomOf="@+id/stats_stamina_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/stats_life_value_text_view"
+        app:layout_constraintTop_toTopOf="@+id/stats_stamina_image_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

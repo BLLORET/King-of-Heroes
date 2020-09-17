@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StatsView">
+        <attr name="victory" format="string" />
+        <attr name="life" format="string" />
+        <attr name="stamina" format="string" />
+    </declare-styleable>
+
+</resources>

@@ -20,4 +20,22 @@
     <string name="spider_man">Spider-Man</string>
     <string name="superman">Superman</string>
     <string name="wonder_woman">Wonder Woman</string>
+
+    <string name="img_desc_card_fighter">Card of a fighter</string>
+    <string name="img_desc_board_game">Picture of the bord game</string>
+    <string name="img_desc_background">Background of the screen</string>
+    <string name="img_desc_Dice">Picture of the dice</string>
+    <string name="you">(You)</string>
+
+    <string name="zero_value">0</string>
+    <string name="max_victory_points">%d / 20</string>
+    <string name="max_life">%d / 10</string>
+    <string name="dice_turn">%d / 3</string>
+
+    <string name="btn_throw">THROW</string>
+    <string name="btn_validate">VALIDATE</string>
+
+    <string name="stamina_logo">Stamina Logo</string>
+    <string name="life_logo">Life logo</string>
+    <string name="victory_logo">Victory logo</string>
 </resources>
