@@ -41,4 +41,6 @@
     <string name="play">Play</string>
     <string name="content_description_home_image">Background of the application</string>
     <string name="rules">Rules</string>
+    <string name="choose_your_hero">Choose your hero</string>
+    <string name="choose">Choose</string>
 </resources>
