@@ -4,20 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparentGray"
     tools:context=".ui.dice_screen.DiceFragment">
-
-    <ImageView
-        android:id="@+id/dice_background_image_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#C9454142"
-        android:contentDescription="@string/img_desc_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/dice_btn_throw"
@@ -26,6 +14,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_rounded"
         android:fontFamily="@font/marvel"
+        android:padding="10dp"
         android:text="@string/btn_throw"
         android:textColor="#FFB751"
         android:textSize="40sp"
@@ -141,10 +130,10 @@
         app:layout_constraintEnd_toStartOf="@+id/dice_fighter_top_right_text_view"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/dice_background_image_view"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dice_img_btn_dice_4" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/dice_fighter_top_left_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -165,7 +154,7 @@
         app:layout_constraintStart_toEndOf="@+id/dice_fighter_top_left_text_view"
         app:layout_constraintTop_toTopOf="@+id/dice_fighter_top_left_text_view" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/dice_fighter_top_right_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -187,7 +176,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/dice_fighter_bottom_left_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -195,7 +184,7 @@
         app:layout_constraintEnd_toEndOf="@+id/dice_fighter_bottom_left_text_view"
         app:layout_constraintStart_toStartOf="@+id/dice_fighter_bottom_left_text_view" >
 
-    </fr.learnandrun.kingofheroes.ui.view.Stats>
+    </fr.learnandrun.kingofheroes.ui.view.StatsView>
 
     <TextView
         android:id="@+id/dice_fighter_bottom_right_text_view"
@@ -211,7 +200,7 @@
         app:layout_constraintStart_toEndOf="@+id/dice_fighter_bottom_left_text_view"
         app:layout_constraintTop_toTopOf="@+id/dice_fighter_bottom_left_text_view" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/dice_fighter_bottom_right_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

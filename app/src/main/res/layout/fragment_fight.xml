@@ -4,18 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparentGray"
     tools:context=".ui.fighter_screen.FightFragment">
 
-    <ImageView
-        android:id="@+id/fight_background_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#41454142"
-        android:contentDescription="@string/img_desc_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/fight_bord_game_image_view"
@@ -68,7 +59,7 @@
         app:layout_constraintLeft_toRightOf="@+id/fight_fighter_top_left_name_text_view"
         app:layout_constraintTop_toTopOf="@+id/fight_fighter_top_left_name_text_view" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/fight_fighter_top_left_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,7 +87,7 @@
         app:layout_constraintStart_toStartOf="@+id/fight_fighter_top_right_card_image_view"
         app:layout_constraintTop_toBottomOf="@+id/fight_fighter_top_right_card_image_view" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/fight_fighter_top_right_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,7 +115,7 @@
         app:layout_constraintEnd_toEndOf="@+id/fight_fighter_bottom_left_card_image_view"
         app:layout_constraintStart_toStartOf="@+id/fight_fighter_bottom_left_card_image_view" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/fight_fighter_bottom_left_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,7 +134,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <fr.learnandrun.kingofheroes.ui.view.Stats
+    <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/fight_fighter_bottom_right_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
