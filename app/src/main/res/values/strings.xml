@@ -43,4 +43,8 @@
     <string name="rules">Rules</string>
     <string name="choose_your_hero">Choose your hero</string>
     <string name="choose">Choose</string>
+
+    <string name="win_string">You are the king of Hereos ! </string>
+    <string name="lose_string">You lost ! </string>
+    <string name="replay">Replay</string>
 </resources>

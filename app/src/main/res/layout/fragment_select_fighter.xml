@@ -7,19 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.select_fighter_screen.SelectFighterFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/fd_android"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -41,7 +28,7 @@
         android:id="@+id/select_fighter_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="244dp"
+        android:layout_marginBottom="112dp"
         android:fontFamily="@font/marvel"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -54,37 +41,69 @@
         android:id="@+id/select_fighter_preview_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="96dp"
         android:background="@drawable/arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/select_fighter_name_text_view"
-        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/select_fighter_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="96dp"
         android:background="@drawable/arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.774"
+        app:layout_constraintHorizontal_bias="0.794"
         app:layout_constraintStart_toEndOf="@+id/select_fighter_name_text_view" />
 
     <Button
         android:id="@+id/select_fighter_choose_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/btn_rounded"
         android:gravity="center|center_vertical"
         android:textColor="#FFB751"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/choose" />
+
+    <ImageView
+        android:id="@+id/select_fighter_center_image_view"
+        android:layout_width="280dp"
+        android:layout_height="470dp"
+        android:src="@drawable/ant_man"
+        app:layout_constraintBottom_toTopOf="@+id/select_fighter_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.527" />
+
+    <ImageView
+        android:id="@+id/select_fighter_right_image_view"
+        android:layout_width="280dp"
+        android:layout_height="470dp"
+        android:src="@drawable/aquaman"
+        app:layout_constraintBottom_toBottomOf="@+id/select_fighter_center_image_view"
+        app:layout_constraintStart_toEndOf="@+id/select_fighter_center_image_view"
+        app:layout_constraintTop_toTopOf="@+id/select_fighter_center_image_view"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/select_fighter_left_image_view"
+        android:layout_width="280dp"
+        android:layout_height="470dp"
+        android:src="@drawable/batman"
+        app:layout_constraintBottom_toBottomOf="@id/select_fighter_center_image_view"
+        app:layout_constraintEnd_toStartOf="@+id/select_fighter_center_image_view"
+        app:layout_constraintTop_toTopOf="@+id/select_fighter_center_image_view"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
