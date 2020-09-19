@@ -6,10 +6,10 @@ import fr.learnandrun.kingofheroes.ui.home_screen.HomeFragment
 import fr.learnandrun.kingofheroes.ui.select_fighter_screen.SelectFighterFragment
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        supportFragmentManager.beginTransaction().add(R.id.main_container, HomeFragment()).commit()
     }
+
 }

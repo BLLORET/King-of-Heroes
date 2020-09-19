@@ -49,4 +49,6 @@
     <string name="replay">Replay</string>
     <string name="character_selector_left_button">Character selector left button</string>
     <string name="character_selector_right_button">Character selector right button</string>
+    <string name="background_image">Background image</string>
+    <string name="rules_url">https://www.regledujeu.fr/king-of-tokyo/</string>
 </resources>

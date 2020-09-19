@@ -24,6 +24,7 @@ android {
     }
 }
 
+ext.androidx_version = '2.3.0'
 ext.lifecycle_version = '2.2.0'
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -35,6 +36,10 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Add dependency on navigation component
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidx_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidx_version"
 
     // Add dependency on lifecycle aware components
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

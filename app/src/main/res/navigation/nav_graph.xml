@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.home_screen.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_selectFighterFragment"
+            app:destination="@id/selectFighterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectFighterFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.select_fighter_screen.SelectFighterFragment"
+        android:label="fragment_select_fighter"
+        tools:layout="@layout/fragment_select_fighter" >
+        <action
+            android:id="@+id/action_selectFighterFragment_to_boardFragment"
+            app:destination="@id/boardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/boardFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.board_screen.BoardFragment"
+        android:label="fragment_board"
+        tools:layout="@layout/fragment_board" >
+        <action
+            android:id="@+id/action_boardFragment_to_diceFragment"
+            app:destination="@id/diceFragment" />
+        <action
+            android:id="@+id/action_boardFragment_to_finalScreenFragment"
+            app:destination="@id/finalScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diceFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.dice_screen.DiceFragment"
+        android:label="fragment_dice"
+        tools:layout="@layout/fragment_dice" >
+        <action
+            android:id="@+id/action_diceFragment_to_boardFragment2"
+            app:destination="@id/boardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finalScreenFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.final_screen.FinalScreenFragment"
+        android:label="fragment_final_screen"
+        tools:layout="@layout/fragment_final_screen" >
+        <action
+            android:id="@+id/action_finalScreenFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+</navigation>
