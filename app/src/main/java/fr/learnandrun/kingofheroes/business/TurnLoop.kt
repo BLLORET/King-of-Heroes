@@ -23,7 +23,7 @@ class TurnLoop(
             ?: nextPlayer()
     }
 
-    fun isFirstRound(): Boolean = actualTurn == 1
+    fun isFirstTurn(): Boolean = actualTurn == 1
 
     fun getActualRound(): Int = actualRound
 

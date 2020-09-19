@@ -3,7 +3,9 @@ package fr.learnandrun.kingofheroes.model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.learnandrun.kingofheroes.business.Board
+import fr.learnandrun.kingofheroes.business.IA
 import fr.learnandrun.kingofheroes.business.Player
+import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 
 class BoardViewModel(
@@ -22,9 +24,18 @@ class BoardViewModel(
         //TODO play animation: Game has ended
     }
 
-    suspend fun showRollDicesInterface() = waitIfPauseable {
+    suspend fun showRollDicesInterface(player: Player) = waitIfPauseable {
         //TODO: display interface over the game board interface (empty dices)
+        // IF ITS A USER => Show Button
+        // ELSE (ITS AN AI) => Do Not Show Button
+        // VVVVVVVVV
+
+        when(player) {
+            is IA -> println("IA")
+            is User -> println("User")
+        }
     }
+
     suspend fun showRollDiceButton() = waitIfPauseable {
         //TODO: Display the button to roll dice
         board.waitForResume()

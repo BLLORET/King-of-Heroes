@@ -15,7 +15,6 @@ abstract class Player(
 
     fun hasEnoughPointsToWin() = victoryPoints == MAX_POINTS
 
-    abstract suspend fun showRollDicesButton()
     abstract suspend fun waitForRollClick()
     abstract suspend fun waitForReRollOrPassClick(dices: MutableList<DiceFace?>)
     abstract suspend fun waitForEndRollClick()

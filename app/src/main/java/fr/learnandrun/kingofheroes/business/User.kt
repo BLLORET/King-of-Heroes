@@ -7,10 +7,6 @@ class User(
     hero: Hero
 ) : Player(board, hero) {
 
-    override suspend fun showRollDicesButton() {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun waitForRollClick() {
         TODO("Not yet implemented")
     }

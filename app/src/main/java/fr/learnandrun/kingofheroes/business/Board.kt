@@ -52,12 +52,15 @@ class Board(
 
     private suspend fun defineFirstPlayerLoop() {
         boardViewModel.startDefineFirstPlayer()
-        var playersCompetitor = this.players.toList()
+        var playersCompetitor = players.toList()
         do {
             //Generate each players slaps number
             val dicesDraws = playersCompetitor.map { player ->
-                // display the roll button (will work only for user)
-                player.showRollDicesButton()
+                // display the dices interface
+                boardViewModel.showRollDicesInterface(player)
+
+                // wait for the player to roll its dices
+                player.waitForRollClick()
 
                 // roll dices
                 val dicesFaceResult = generateSequence { Dice.roll() }
@@ -136,7 +139,7 @@ class Board(
         val dices: MutableList<DiceFace?> = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
 
         // display the dices interface
-        boardViewModel.showRollDicesInterface()
+        boardViewModel.showRollDicesInterface(player)
 
         // wait for the player to roll its dices
         player.waitForRollClick()
@@ -177,7 +180,7 @@ class Board(
             when (dice) {
                 DiceFace.HEART -> if (playerInsideCity != player) player.increaseHealth()
                 DiceFace.LIGHTNING -> player.increaseEnergy()
-                DiceFace.SLAP -> if (!turnLoop.isFirstRound()) slapPlayers(player)
+                DiceFace.SLAP -> if (!turnLoop.isFirstTurn()) slapPlayers(player)
                 DiceFace.ONE -> numberOfOne++
                 DiceFace.TWO -> numberOfTwo++
                 DiceFace.THREE -> numberOfThree++
