@@ -6,11 +6,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Hero
 import fr.learnandrun.kingofheroes.model.SelectFighterViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import fr.learnandrun.kingofheroes.tools.android.toast
+import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragmentDirections
 import kotlinx.android.synthetic.main.fragment_select_fighter.*
 import kotlin.math.max
 import kotlin.math.min
@@ -22,25 +24,29 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        selectFighterViewModel = ViewModelProvider(this).get(SelectFighterViewModel::class.java)
+        selectFighterViewModel = ViewModelProvider(this)
+            .get(SelectFighterViewModel::class.java)
 
         selectFighterViewModel.currentIndex.observe(viewLifecycleOwner) { currentIndex ->
 
             select_fighter_left_image_view.setImageDrawable(
                 if (currentIndex > 0)
-                    Hero.values()[currentIndex - 1].getImage(context!!)
+                    Hero.atIndex(currentIndex - 1).getImage(requireContext())
                 else
                     null
             )
-            select_fighter_center_image_view.setImageDrawable(Hero.values()[currentIndex].getImage(context!!))
+            select_fighter_center_image_view.setImageDrawable(
+                Hero.atIndex(currentIndex).getImage(requireContext())
+            )
             select_fighter_right_image_view.setImageDrawable(
                 if (currentIndex < Hero.values().size - 1)
-                    Hero.values()[currentIndex + 1].getImage(context!!)
+                    Hero.atIndex(currentIndex + 1).getImage(requireContext())
                 else
                     null
             )
 
-            select_fighter_name_text_view.text = Hero.values()[currentIndex].getDisplayName(context!!)
+            select_fighter_name_text_view.text =
+                Hero.atIndex(currentIndex).getDisplayName(requireContext())
 
 
             select_fighter_previous_button.visibility = when {
@@ -54,21 +60,22 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
         }
 
         select_fighter_previous_button.setOnClickListener {
-            selectFighterViewModel.currentIndex.postValue(
-                max(0, selectFighterViewModel.currentIndex.value!!.minus(1))
-            )
+            selectFighterViewModel.apply {
+                currentIndex.value = currentIndex.value?.minus(1)
+            }
         }
 
         select_fighter_next_button.setOnClickListener {
-            selectFighterViewModel.currentIndex.postValue(
-                min(Hero.values().size - 1, selectFighterViewModel.currentIndex.value!!.plus(1))
-            )
+            selectFighterViewModel.apply {
+                currentIndex.value = currentIndex.value?.plus(1)
+            }
         }
 
         select_fighter_choose_button.setOnClickListener {
-            toast("You have chosen " +
-                    Hero.values()[selectFighterViewModel.currentIndex.value!!]
-                        .getDisplayName(context!!)
+            findNavController().navigate(
+                SelectFighterFragmentDirections.actionSelectFighterFragmentToBoardFragment(
+                    Hero.atIndex(selectFighterViewModel.currentIndex.value)
+                )
             )
         }
     }

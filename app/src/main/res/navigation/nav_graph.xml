@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_boardFragment_to_finalScreenFragment"
             app:destination="@id/finalScreenFragment" />
+        <argument
+            android:name="selectedHero"
+            app:argType="fr.learnandrun.kingofheroes.business.Hero" />
     </fragment>
     <fragment
         android:id="@+id/diceFragment"

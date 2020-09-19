@@ -1,8 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+// apply the safeargs plugin
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
-android {
+android {// enforce compilation compatibility with Java version 8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
