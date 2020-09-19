@@ -5,9 +5,10 @@ import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.tools.delegate.RangeDelegate
 
 abstract class Player(
-    val board: Board,
     val hero: Hero
 ) {
+    lateinit var board: Board
+
     var health: Int by RangeDelegate(DEFAULT_HEALTH, MIN_HEALTH, MAX_HEALTH)
     var victoryPoints: Int by RangeDelegate(DEFAULT_POINTS, MIN_POINTS, MAX_POINTS)
     var energy: Int = 0

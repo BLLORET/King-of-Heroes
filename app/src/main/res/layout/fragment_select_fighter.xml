@@ -50,27 +50,27 @@
         app:layout_constraintEnd_toStartOf="@+id/select_fighter_center_image_view"
         app:layout_constraintTop_toTopOf="@+id/select_fighter_center_image_view" />
 
-    <Button
+    <ImageButton
         android:id="@+id/select_fighter_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/arrow_right"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/character_selector_right_button"
+        android:src="@drawable/arrow_right"
         app:layout_constraintBottom_toBottomOf="@+id/select_fighter_name_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.794"
-        app:layout_constraintStart_toEndOf="@+id/select_fighter_name_text_view"
         app:layout_constraintTop_toTopOf="@+id/select_fighter_name_text_view" />
 
-    <Button
+    <ImageButton
         android:id="@+id/select_fighter_previous_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/arrow_left"
+        android:layout_marginStart="20dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/character_selector_left_button"
+        android:src="@drawable/arrow_left"
         app:layout_constraintBottom_toBottomOf="@+id/select_fighter_name_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/select_fighter_name_text_view"
-        app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/select_fighter_name_text_view" />
 

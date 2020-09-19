@@ -24,29 +24,34 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
 
         selectFighterViewModel = ViewModelProvider(this).get(SelectFighterViewModel::class.java)
 
-        selectFighterViewModel.currentIndex.observe(viewLifecycleOwner, Observer { currentIndex ->
+        selectFighterViewModel.currentIndex.observe(viewLifecycleOwner) { currentIndex ->
 
             select_fighter_left_image_view.setImageDrawable(
                 if (currentIndex > 0)
                     Hero.values()[currentIndex - 1].getImage(context!!)
-                else null
+                else
+                    null
             )
             select_fighter_center_image_view.setImageDrawable(Hero.values()[currentIndex].getImage(context!!))
             select_fighter_right_image_view.setImageDrawable(
-                if (currentIndex < Hero.values().size - 1) Hero.values()[currentIndex + 1].getImage(context!!)
-                else null
+                if (currentIndex < Hero.values().size - 1)
+                    Hero.values()[currentIndex + 1].getImage(context!!)
+                else
+                    null
             )
 
             select_fighter_name_text_view.text = Hero.values()[currentIndex].getDisplayName(context!!)
 
-            select_fighter_previous_button.background =
-                if (currentIndex > 0) ContextCompat.getDrawable(context!!, R.drawable.arrow_left)
-                else null
 
-            select_fighter_next_button.background =
-                if (currentIndex < Hero.values().size - 1) ContextCompat.getDrawable(context!!, R.drawable.arrow_right)
-                else null
-        })
+            select_fighter_previous_button.visibility = when {
+                currentIndex > 0 -> View.VISIBLE
+                else -> View.GONE
+            }
+            select_fighter_next_button.visibility = when {
+                currentIndex < Hero.values().size - 1 -> View.VISIBLE
+                else -> View.GONE
+            }
+        }
 
         select_fighter_previous_button.setOnClickListener {
             selectFighterViewModel.currentIndex.postValue(
