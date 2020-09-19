@@ -6,19 +6,20 @@ class User(
     hero: Hero
 ) : Player(hero) {
 
-    override suspend fun waitForRollClick() {
+    override suspend fun waitForRollClick(board: Board) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun waitForReRollOrPassClick(dices: MutableList<DiceFace?>) {
+    override suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun waitForEndRollClick() {
+    override suspend fun waitForEndRollClick(board: Board) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun decreaseHealth(value: Int) {
+    override suspend fun decreaseHealth(board: Board, value: Int) {
+        super.decreaseHealth(board, value)
         TODO("Not yet implemented")
     }
 }

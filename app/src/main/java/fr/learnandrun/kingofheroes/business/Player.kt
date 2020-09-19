@@ -6,8 +6,6 @@ import fr.learnandrun.kingofheroes.tools.delegate.RangeDelegate
 abstract class Player(
     val hero: Hero
 ) {
-    lateinit var board: Board
-
     private var health: Int by RangeDelegate(DEFAULT_HEALTH, MIN_HEALTH, MAX_HEALTH)
     private var victoryPoints: Int by RangeDelegate(DEFAULT_POINTS, MIN_POINTS, MAX_POINTS)
     private var energy: Int = 0
@@ -16,14 +14,16 @@ abstract class Player(
 
     fun hasEnoughPointsToWin() = victoryPoints == MAX_POINTS
 
-    abstract suspend fun waitForRollClick()
-    abstract suspend fun waitForReRollOrPassClick(dices: MutableList<DiceFace?>)
-    abstract suspend fun waitForEndRollClick()
+    abstract suspend fun waitForRollClick(board: Board)
+    abstract suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>)
+    abstract suspend fun waitForEndRollClick(board: Board)
 
     fun increaseHealth(value: Int = 1) {
+        health += value
+    }
+    open suspend fun decreaseHealth(board: Board, value: Int = 1) {
         health -= value
     }
-    abstract suspend fun decreaseHealth(value: Int = 1)
 
     fun increaseVictoryPoints(value: Int = 1) {
         victoryPoints += value

@@ -60,7 +60,7 @@ class Board(
                 boardViewModel.showRollDicesInterface(player)
 
                 // wait for the player to roll its dices
-                player.waitForRollClick()
+                player.waitForRollClick(this)
 
                 // roll dices
                 val dicesFaceResult = generateSequence { Dice.roll() }
@@ -142,7 +142,7 @@ class Board(
         boardViewModel.showRollDicesInterface(player)
 
         // wait for the player to roll its dices
-        player.waitForRollClick()
+        player.waitForRollClick(this)
 
         do {
             // roll dices for all null dices
@@ -154,7 +154,7 @@ class Board(
             boardViewModel.showRollDicesAnimation(dices.filterNotNull())
 
             // will set at null the dices to re roll
-            player.waitForReRollOrPassClick(dices)
+            player.waitForReRollOrPassClick(this, dices)
         } while (--tryRemaining > 1 && dices.filter { it == null }.count() != 0)
 
         // roll dices for all null dices
@@ -166,7 +166,7 @@ class Board(
         boardViewModel.showRollDicesAnimation(dices.filterNotNull())
 
         // button to end the roll dices phase
-        player.waitForEndRollClick()
+        player.waitForEndRollClick(this)
 
         return dices.filterNotNull()
     }
@@ -194,9 +194,9 @@ class Board(
 
     private suspend fun slapPlayers(player: Player) {
         if (playerInsideCity != player)
-            playerInsideCity?.decreaseHealth()
+            playerInsideCity?.decreaseHealth(this)
         else
-            players.filter { it != player }.forEach { it.decreaseHealth() }
+            players.filter { it != player }.forEach { it.decreaseHealth(this) }
     }
 
     /* Companion Object */

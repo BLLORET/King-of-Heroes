@@ -8,23 +8,26 @@ class IA(
     hero: Hero
 ) : Player(hero) {
 
-    override suspend fun waitForRollClick() {
+    override suspend fun waitForRollClick(board: Board) {
         delay(1500)
     }
 
-    override suspend fun waitForReRollOrPassClick(dices: MutableList<DiceFace?>) {
-        dices.forEachIndexed { index, diceFace ->
+    override suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>) {
+        dices.forEachIndexed { index, _ ->
             if (Random.nextInt(0, 4) == 0)
                 dices[index] = null
         }
         delay(1500)
     }
 
-    override suspend fun waitForEndRollClick() {
+    override suspend fun waitForEndRollClick(board: Board) {
         delay(1500)
     }
 
-    override suspend fun decreaseHealth(value: Int) {
-        //TODO ICI J'SÉ PO :( HELP ME GINET :( :'(
+    override suspend fun decreaseHealth(board: Board, value: Int) {
+        super.decreaseHealth(board, value)
+        // If the IA wants to leave the city (currently driven by random)
+        if (board.playerInsideCity == this && Random.nextBoolean())
+            board.playerInsideCity = null
     }
 }
