@@ -3,9 +3,8 @@ package fr.learnandrun.kingofheroes.business
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 
 class User(
-    board: Board,
     hero: Hero
-) : Player(board, hero) {
+) : Player(hero) {
 
     override suspend fun waitForRollClick() {
         TODO("Not yet implemented")

@@ -5,9 +5,8 @@ import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 class IA(
-    board: Board,
     hero: Hero
-) : Player(board, hero) {
+) : Player(hero) {
 
     override suspend fun waitForRollClick() {
         delay(1500)

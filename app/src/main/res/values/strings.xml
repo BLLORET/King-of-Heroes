@@ -38,4 +38,15 @@
     <string name="stamina_logo">Stamina Logo</string>
     <string name="life_logo">Life logo</string>
     <string name="victory_logo">Victory logo</string>
+    <string name="play">Play</string>
+    <string name="content_description_home_image">Background of the application</string>
+    <string name="rules">Rules</string>
+    <string name="choose_your_hero">Choose your hero</string>
+    <string name="choose">Choose</string>
+
+    <string name="win_string">You are the king of Hereos ! </string>
+    <string name="lose_string">You lost ! </string>
+    <string name="replay">Replay</string>
+    <string name="character_selector_left_button">Character selector left button</string>
+    <string name="character_selector_right_button">Character selector right button</string>
 </resources>
