@@ -1,21 +1,32 @@
 package fr.learnandrun.kingofheroes.model
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import fr.learnandrun.kingofheroes.business.Board
-import fr.learnandrun.kingofheroes.business.IA
-import fr.learnandrun.kingofheroes.business.Player
-import fr.learnandrun.kingofheroes.business.User
+import fr.learnandrun.kingofheroes.business.*
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 
-class BoardViewModel(
-    players: List<Player>
-) : ViewModel() {
+class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
-    val isPaused = MutableLiveData(false)
+    private val isPaused = MutableLiveData(false)
 
-    val board = Board(this, players)
+    private lateinit var board: Board
 
+    fun startGame(selectedHero: Hero) {
+        val heroes = Hero.values().toMutableSet()
+        heroes.remove(selectedHero)
+
+        // listOf take varargs and the operator "*" convert type array in multiple args
+        // The result of this is a List<Player> with a user and 3 IAs
+        val players: List<Player> = listOf(User(selectedHero),
+            *(1..3).map {
+                IA(heroes.random().also { heroes.remove(it) })
+            }.toTypedArray()
+        )
+
+        board = Board(this, players)
+        board.startGame()
+    }
 
     suspend fun gameHasStarted() = waitIfPauseable {
         //TODO play animation: Game has started
@@ -78,5 +89,6 @@ class BoardViewModel(
             board.waitForResume()
         function()
     }
+
 
 }

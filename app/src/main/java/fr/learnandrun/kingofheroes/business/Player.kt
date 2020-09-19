@@ -1,14 +1,19 @@
 package fr.learnandrun.kingofheroes.business
 
+import androidx.lifecycle.MutableLiveData
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.tools.delegate.RangeDelegate
 
 abstract class Player(
     val hero: Hero
 ) {
-    private var health: Int by RangeDelegate(DEFAULT_HEALTH, MIN_HEALTH, MAX_HEALTH)
-    private var victoryPoints: Int by RangeDelegate(DEFAULT_POINTS, MIN_POINTS, MAX_POINTS)
-    private var energy: Int = 0
+    val healthLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_HEALTH)
+    val victoryPointsLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_POINTS)
+    val energyLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_ENERGY)
+
+    private var health: Int by RangeDelegate(healthLiveData, MIN_HEALTH, MAX_HEALTH)
+    private var victoryPoints: Int by RangeDelegate(victoryPointsLiveData, MIN_POINTS, MAX_POINTS)
+    private var energy: Int by RangeDelegate(energyLiveData, MIN_ENERGY, MAX_ENERGY)
 
     fun isDead(): Boolean = health == MIN_HEALTH
 
@@ -33,10 +38,10 @@ abstract class Player(
     }
 
     fun increaseEnergy(value: Int = 1) {
-        victoryPoints += value
+        energy += value
     }
     fun decreaseEnergy(value: Int = 1) {
-        victoryPoints -= value
+        energy -= value
     }
 
     companion object {
@@ -47,5 +52,9 @@ abstract class Player(
         const val DEFAULT_POINTS = 0
         const val MIN_POINTS = 0
         const val MAX_POINTS = 20
+
+        const val DEFAULT_ENERGY = 0
+        const val MIN_ENERGY = 0
+        const val MAX_ENERGY = Int.MAX_VALUE
     }
 }
