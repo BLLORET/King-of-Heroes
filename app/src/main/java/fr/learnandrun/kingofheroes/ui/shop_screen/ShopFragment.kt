@@ -6,11 +6,12 @@ import android.widget.ImageButton
 import androidx.lifecycle.ViewModelProvider
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Attack
+import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.model.ShopViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import kotlinx.android.synthetic.main.fragment_shop.*
 
-class ShopFragment : DefaultFragment(R.layout.fragment_shop) {
+class ShopFragment(private val player: Player) : DefaultFragment(R.layout.fragment_shop) {
     private lateinit var shopViewModel: ShopViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,8 +38,13 @@ class ShopFragment : DefaultFragment(R.layout.fragment_shop) {
         )
 
         imageButton.setOnClickListener {
+            // Return if the player has not enough money
+            if (player.energyLiveData.value!! < shopViewModel.attacks.value!![attackIndex].price)
+                return@setOnClickListener
             // TODO : Apply the effect before redirect
 
+            // Buy the attack
+            player.decreaseEnergy(shopViewModel.attacks.value!![attackIndex].price)
             // Get current attacks
             val newAttacks: MutableList<Attack>? = shopViewModel.attacks.value?.toMutableList()
 
