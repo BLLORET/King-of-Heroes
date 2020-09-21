@@ -14,7 +14,7 @@ class IntLoop(
 
     fun nextValue(whenCycling: () -> Unit): Int {
         val actualValue = value++
-        if (value > maxRange) {
+        if (value >= maxRange) {
             value = minRange
             whenCycling()
         }
