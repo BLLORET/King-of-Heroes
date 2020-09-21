@@ -18,15 +18,12 @@ class Board(
     val players: List<Player>
 ) {
 
+    private var currentPlayer: Player = players[0]
     val playerInsideCityLiveData: MutableLiveData<Player?> = MutableLiveData(null)
-    val dicesLiveData: MutableLiveData<MutableList<DiceFace?>> = MutableLiveData(null)
 
     var playerInsideCity: Player?
         get() = playerInsideCityLiveData.value
         set(value) { playerInsideCityLiveData.value = value }
-    var dices: MutableList<DiceFace?>
-        get() = dicesLiveData.value ?: throw IllegalStateException("Dices list must not be null")
-        set(value) { dicesLiveData.value = value }
 
     private var gameStarted = false
     private val turnLoop = TurnLoop(players)
@@ -64,11 +61,11 @@ class Board(
         boardViewModel.startDefineFirstPlayer()
         var playersCompetitor = players.toList()
         do {
-            // reset dices
-            dices = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
-
             //Generate each players slaps number
             val dicesDraws = playersCompetitor.map { player ->
+
+                currentPlayer = player
+                boardViewModel.defineFirstPlayerTurn()
                 // display the dices interface
                 boardViewModel.showRollDicesInterface(player)
 
@@ -76,17 +73,15 @@ class Board(
                 player.waitForRollClick(this)
 
                 // roll dices
-                dices = generateSequence { Dice.roll() }
-                    .take(DICE_AMOUNT)
-                    .toMutableList()
+                val dicesFaceResult = List(DICE_AMOUNT) { Dice.roll() }
 
                 // display result
-                boardViewModel.showRollDicesAnimation(dices.filterNotNull())
+                boardViewModel.showRollDicesAnimation(dicesFaceResult)
 
                 // display board interface
                 boardViewModel.showBoardInterface()
 
-                player to dices.filter { it == DiceFace.SLAP }.count()
+                player to dicesFaceResult.filter { it == DiceFace.SLAP }.count()
             }
 
             val firstPair = dicesDraws
@@ -114,6 +109,7 @@ class Board(
         boardViewModel.gameHasStarted()
 
         for (player in turnLoop) {
+            currentPlayer = player
             boardViewModel.playerTurnStart(player)
 
             playTurn(player)
@@ -122,6 +118,9 @@ class Board(
                 boardViewModel.playerHasWon(player)
                 break
             }
+            if (playerInsideCity?.isDead() == true)
+                playerInsideCity = null
+
             boardViewModel.playerTurnEnd(player)
         }
 
@@ -152,7 +151,7 @@ class Board(
 
     private suspend fun rollDices(player: Player): List<DiceFace> {
         var tryRemaining = 3
-        dices = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
+        val dices: MutableList<DiceFace?> = MutableList(DICE_AMOUNT) { null }
 
         // display the dices interface
         boardViewModel.showRollDicesInterface(player)
@@ -162,7 +161,7 @@ class Board(
 
         do {
             // roll dices for all null dices
-            for (index in 0 until dices.size) {
+            for (index in dices.indices) {
                 if (dices[index] == null) dices[index] = Dice.roll()
             }
 
@@ -174,7 +173,7 @@ class Board(
         } while (--tryRemaining > 1 && dices.filter { it == null }.count() != 0)
 
         // roll dices for all null dices
-        for (index in 0 until dices.size) {
+        for (index in dices.indices) {
             if (dices[index] == null) dices[index] = Dice.roll()
         }
 
@@ -216,6 +215,8 @@ class Board(
         else
             players.filter { it != player }.forEach { it.decreaseHealth(this) }
     }
+
+    fun getCurrentPlayer(): Player = currentPlayer
 
     /* Companion Object */
     companion object {

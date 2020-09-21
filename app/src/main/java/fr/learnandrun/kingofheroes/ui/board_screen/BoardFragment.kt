@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -43,15 +44,22 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             board_player_display_name_text_view: TextView,
             board_player_stats_view: StatsView
         ) {
+            player.healthLiveData.removeObservers(viewLifecycleOwner)
             player.healthLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.life = it
+                if (it == 0)
+                    board_player_card_image_view.setColorFilter(
+                        ContextCompat.getColor(requireContext(), R.color.looseGray))
             }
+            player.victoryPointsLiveData.removeObservers(viewLifecycleOwner)
             player.victoryPointsLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.victory = it
             }
+            player.energyLiveData.removeObservers(viewLifecycleOwner)
             player.energyLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.stamina = it
             }
+            //TODO: USE observable...
             board_player_card_image_view.setImageDrawable(player.hero.getImage(requireContext()))
             board_player_display_name_text_view.text = getString(
                 R.string.user_display_name_format,
@@ -84,6 +92,7 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             board_player4_stats_view
         )
 
+        boardViewModel.board.playerInsideCityLiveData.removeObservers(viewLifecycleOwner)
         boardViewModel.board.playerInsideCityLiveData.observe(viewLifecycleOwner) {
             it?.let { player ->
                 board_player_in_city_image_view.setImageDrawable(

@@ -2,12 +2,19 @@ package fr.learnandrun.kingofheroes.ui.dice_screen
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.learnandrun.kingofheroes.R
+import fr.learnandrun.kingofheroes.business.Player
+import fr.learnandrun.kingofheroes.business.User
+import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_dice.*
 
 class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
@@ -29,31 +36,71 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             )
         }
 
-        if (!args.isUser) dice_btn_throw.visibility = View.GONE
+        if (!args.isUser)
+        {
+            dice_btn_throw.visibility = View.INVISIBLE
+            dice_btn_throw.isEnabled = false
+        }
 
         dice_btn_throw.setOnClickListener {
             boardViewModel.board.resumeGame()
         }
 
-        boardViewModel.board.dicesLiveData.observe(viewLifecycleOwner) {
-            it?.let { dices ->
-                if (dices.size == 6) {
-                    dice_img_btn_dice_1.setImageDrawable(dices[0]?.getImage(requireContext()))
-                    dice_img_btn_dice_2.setImageDrawable(dices[1]?.getImage(requireContext()))
-                    dice_img_btn_dice_3.setImageDrawable(dices[2]?.getImage(requireContext()))
-                    dice_img_btn_dice_4.setImageDrawable(dices[3]?.getImage(requireContext()))
-                    dice_img_btn_dice_5.setImageDrawable(dices[4]?.getImage(requireContext()))
-                    dice_img_btn_dice_6.setImageDrawable(dices[5]?.getImage(requireContext()))
-                }
-                else {
-                    dice_img_btn_dice_1.setImageDrawable(null)
-                    dice_img_btn_dice_2.setImageDrawable(null)
-                    dice_img_btn_dice_3.setImageDrawable(null)
-                    dice_img_btn_dice_4.setImageDrawable(null)
-                    dice_img_btn_dice_5.setImageDrawable(null)
-                    dice_img_btn_dice_6.setImageDrawable(null)
-                }
-            }
+        val currentPlayer = boardViewModel.board.getCurrentPlayer()
+        dice_player_display_name_text_view.text = getString(
+            R.string.user_display_name_format,
+            currentPlayer.hero.getDisplayName(requireContext()),
+            if (currentPlayer is User) getString(R.string.you) else ""
+        )
+
+
+        fun setDiceImage(button: ImageButton, diceFace: DiceFace?) =
+            button.setImageDrawable(diceFace?.getImage(requireContext()))
+
+        boardViewModel.showRollDicesAnimationLambda = { dices ->
+            setDiceImage(dice_img_btn_dice_1, dices[0])
+            setDiceImage(dice_img_btn_dice_2, dices[1])
+            setDiceImage(dice_img_btn_dice_3, dices[2])
+            setDiceImage(dice_img_btn_dice_4, dices[3])
+            setDiceImage(dice_img_btn_dice_5, dices[4])
+            setDiceImage(dice_img_btn_dice_6, dices[5])
         }
+
+
+        fun linkPlayerToView(
+            player: Player,
+            board_player_display_name_text_view: TextView,
+            board_player_stats_view: StatsView
+        ) {
+            board_player_stats_view.life = player.healthLiveData.value!!
+            board_player_stats_view.victory = player.victoryPointsLiveData.value!!
+            board_player_stats_view.stamina = player.energyLiveData.value!!
+            board_player_display_name_text_view.text = getString(
+                R.string.user_display_name_format,
+                player.hero.getDisplayName(requireContext()),
+                if (player is User) getString(R.string.you) else ""
+            )
+        }
+
+        linkPlayerToView(
+            boardViewModel.players[0],
+            dice_fighter_top_left_text_view,
+            dice_fighter_top_left_stats_view
+        )
+        linkPlayerToView(
+            boardViewModel.players[1],
+            dice_fighter_top_right_text_view,
+            dice_fighter_top_right_stats_view
+        )
+        linkPlayerToView(
+            boardViewModel.players[2],
+            dice_fighter_bottom_right_text_view,
+            dice_fighter_bottom_right_stats_view
+        )
+        linkPlayerToView(
+            boardViewModel.players[3],
+            dice_fighter_bottom_left_text_view,
+            dice_fighter_bottom_left_stats_view
+        )
     }
 }
