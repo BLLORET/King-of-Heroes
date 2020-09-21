@@ -1,5 +1,7 @@
 package fr.learnandrun.kingofheroes.business.dice
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import fr.learnandrun.kingofheroes.R
 
 enum class DiceFace(
@@ -10,5 +12,7 @@ enum class DiceFace(
     THREE(R.drawable.three),
     LIGHTNING(R.drawable.bolt),
     SLAP(R.drawable.slap),
-    HEART(R.drawable.heart)
+    HEART(R.drawable.heart);
+
+    fun getImage(context: Context) = ContextCompat.getDrawable(context, imageId)
 }
