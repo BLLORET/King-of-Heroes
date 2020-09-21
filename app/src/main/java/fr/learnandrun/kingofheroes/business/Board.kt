@@ -8,6 +8,7 @@ import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.model.BoardViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -18,10 +19,14 @@ class Board(
 ) {
 
     val playerInsideCityLiveData: MutableLiveData<Player?> = MutableLiveData(null)
+    val dicesLiveData: MutableLiveData<MutableList<DiceFace?>> = MutableLiveData(null)
 
     var playerInsideCity: Player?
         get() = playerInsideCityLiveData.value
         set(value) { playerInsideCityLiveData.value = value }
+    var dices: MutableList<DiceFace?>
+        get() = dicesLiveData.value ?: throw IllegalStateException("Dices list must not be null")
+        set(value) { dicesLiveData.value = value }
 
     private var gameStarted = false
     private val turnLoop = TurnLoop(players)
@@ -59,6 +64,9 @@ class Board(
         boardViewModel.startDefineFirstPlayer()
         var playersCompetitor = players.toList()
         do {
+            // reset dices
+            dices = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
+
             //Generate each players slaps number
             val dicesDraws = playersCompetitor.map { player ->
                 // display the dices interface
@@ -68,14 +76,17 @@ class Board(
                 player.waitForRollClick(this)
 
                 // roll dices
-                val dicesFaceResult = generateSequence { Dice.roll() }
+                dices = generateSequence { Dice.roll() }
                     .take(DICE_AMOUNT)
-                    .toList()
+                    .toMutableList()
 
                 // display result
-                boardViewModel.showRollDicesAnimation(dicesFaceResult)
+                boardViewModel.showRollDicesAnimation(dices.filterNotNull())
 
-                player to dicesFaceResult.filter { it == DiceFace.SLAP }.count()
+                // display board interface
+                boardViewModel.showBoardInterface()
+
+                player to dices.filter { it == DiceFace.SLAP }.count()
             }
 
             val firstPair = dicesDraws
@@ -141,7 +152,7 @@ class Board(
 
     private suspend fun rollDices(player: Player): List<DiceFace> {
         var tryRemaining = 3
-        val dices: MutableList<DiceFace?> = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
+        dices = generateSequence { null }.take(DICE_AMOUNT).toMutableList()
 
         // display the dices interface
         boardViewModel.showRollDicesInterface(player)
@@ -172,6 +183,8 @@ class Board(
 
         // button to end the roll dices phase
         player.waitForEndRollClick(this)
+
+        boardViewModel.showBoardInterface()
 
         return dices.filterNotNull()
     }

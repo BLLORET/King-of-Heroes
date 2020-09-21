@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Player
@@ -24,6 +25,12 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
 
         // Initialize the board view model
         boardViewModel = ViewModelProvider(requireActivity()).get(BoardViewModel::class.java)
+
+        boardViewModel.showRollDicesInterfaceLambda = { isUser ->
+            findNavController().navigate(
+                BoardFragmentDirections.actionBoardFragmentToDiceFragment(isUser)
+            )
+        }
 
         val isInit = boardViewModel.isInit
         if (!isInit)
@@ -88,5 +95,4 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
         if (!isInit)
             boardViewModel.startGame()
     }
-
 }
