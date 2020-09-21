@@ -120,8 +120,7 @@ class Board(
             }
             if (playerInsideCity?.isDead() == true)
                 playerInsideCity = null
-            if (player.isDead())
-                boardViewModel.triggerDeath(player)
+
             boardViewModel.playerTurnEnd(player)
         }
 

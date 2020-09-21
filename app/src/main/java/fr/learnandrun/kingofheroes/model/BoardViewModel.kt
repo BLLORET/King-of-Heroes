@@ -28,9 +28,6 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     var showRollDicesAnimationLambda: (dices: List<DiceFace?>) -> Unit = {
         throw IllegalStateException("This function must be overridden by the dice fragment")
     }
-    var triggerDeathLambda: (player: Player) -> Unit = {
-        throw IllegalStateException("This function must be overridden by the board fragment")
-    }
 
     fun initGame(selectedHero: Hero) {
         val heroes = Hero.values().toMutableSet()
@@ -120,9 +117,5 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun defineFirstPlayerTurn() {
         delay(2500)
-    }
-
-    suspend fun triggerDeath(player: Player) {
-        triggerDeathLambda(player)
     }
 }

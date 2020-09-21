@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="transparentGray">#C9454142</color>
+    <color name="looseGray">#BB808080</color>
     <color name="marvelRed">#DB0430</color>
 </resources>

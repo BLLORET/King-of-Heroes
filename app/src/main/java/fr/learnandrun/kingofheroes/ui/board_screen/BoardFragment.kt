@@ -1,12 +1,10 @@
 package fr.learnandrun.kingofheroes.ui.board_screen
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,7 +13,6 @@ import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
-import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_board.*
 
@@ -35,9 +32,6 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
                 BoardFragmentDirections.actionBoardFragmentToDiceFragment(isUser)
             )
         }
-        boardViewModel.triggerDeathLambda = {
-            toast("${it.hero.getDisplayName(requireContext())} is dead")
-        }
 
         val isInit = boardViewModel.isInit
         if (!isInit)
@@ -54,7 +48,8 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             player.healthLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.life = it
                 if (it == 0)
-                    ImageViewCompat.setImageTintList(board_player_card_image_view, ContextCompat.getColorStateList(requireContext(), R.color.transparentGray))
+                    board_player_card_image_view.setColorFilter(
+                        ContextCompat.getColor(requireContext(), R.color.looseGray))
             }
             player.victoryPointsLiveData.removeObservers(viewLifecycleOwner)
             player.victoryPointsLiveData.observe(viewLifecycleOwner) {
