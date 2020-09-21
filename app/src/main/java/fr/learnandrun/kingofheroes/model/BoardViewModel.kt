@@ -8,24 +8,35 @@ import fr.learnandrun.kingofheroes.business.dice.DiceFace
 
 class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val isPaused = MutableLiveData(false)
+    var isInit = false
+    lateinit var players: List<Player>
 
     private lateinit var board: Board
+    private var isPaused = MutableLiveData(false)
 
-    fun startGame(selectedHero: Hero) {
+    fun initGame(selectedHero: Hero) {
         val heroes = Hero.values().toMutableSet()
         heroes.remove(selectedHero)
 
         // listOf take varargs and the operator "*" convert type array in multiple args
         // The result of this is a List<Player> with a user and 3 IAs
-        val players: List<Player> = listOf(User(selectedHero),
+        players = listOf(User(selectedHero),
             *(1..3).map {
                 IA(heroes.random().also { heroes.remove(it) })
             }.toTypedArray()
         )
 
         board = Board(this, players)
+        isInit = true
+    }
+
+    fun startGame() {
         board.startGame()
+    }
+
+    fun resetGame() {
+        isInit = false
+        isPaused = MutableLiveData(false)
     }
 
     suspend fun gameHasStarted() = waitIfPauseable {
@@ -81,8 +92,6 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun firstPlayerDefined(firstPlayer: Player) = waitIfPauseable {
         //TODO play animation: First player defined
     }
-
-
 
     private suspend fun waitIfPauseable(function: suspend () -> Unit) {
         if (isPaused.value == true)
