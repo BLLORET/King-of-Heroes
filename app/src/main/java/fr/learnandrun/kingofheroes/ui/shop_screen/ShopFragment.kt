@@ -59,6 +59,10 @@ class ShopFragment(private val player: Player) : DefaultFragment(R.layout.fragme
             newAttacks?.set(attackIndex, allPossibleAttacks.random())
             shopViewModel.attacks.postValue(newAttacks!!)
 
+            imageButton.setImageDrawable(
+               shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
+            )
+
             redirectToFightScreen()
         }
     }
