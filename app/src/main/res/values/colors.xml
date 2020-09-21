@@ -5,4 +5,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="transparentGray">#C9454142</color>
     <color name="marvelRed">#DB0430</color>
+    <color name="marvelYellow">#FFB751</color>
 </resources>
