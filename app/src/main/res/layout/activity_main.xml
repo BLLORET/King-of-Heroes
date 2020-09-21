@@ -8,13 +8,31 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/main_background_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
+        android:paddingStart="0dp"
+        android:paddingEnd="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fd_android" />
+        app:srcCompat="@drawable/fd_android"
+        android:contentDescription="@string/background_image" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_nav_host"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="306dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

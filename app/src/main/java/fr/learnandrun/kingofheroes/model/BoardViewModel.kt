@@ -1,19 +1,43 @@
 package fr.learnandrun.kingofheroes.model
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import fr.learnandrun.kingofheroes.business.Board
-import fr.learnandrun.kingofheroes.business.Player
+import fr.learnandrun.kingofheroes.business.*
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 
-class BoardViewModel(
-    players: List<Player>
-) : ViewModel() {
+class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
-    val isPaused = MutableLiveData(false)
+    var isInit = false
+    lateinit var players: List<Player>
 
-    val board = Board(this, players)
+    private lateinit var board: Board
+    private var isPaused = MutableLiveData(false)
 
+    fun initGame(selectedHero: Hero) {
+        val heroes = Hero.values().toMutableSet()
+        heroes.remove(selectedHero)
+
+        // listOf take varargs and the operator "*" convert type array in multiple args
+        // The result of this is a List<Player> with a user and 3 IAs
+        players = listOf(User(selectedHero),
+            *(1..3).map {
+                IA(heroes.random().also { heroes.remove(it) })
+            }.toTypedArray()
+        )
+
+        board = Board(this, players)
+        isInit = true
+    }
+
+    fun startGame() {
+        board.startGame()
+    }
+
+    fun resetGame() {
+        isInit = false
+        isPaused = MutableLiveData(false)
+    }
 
     suspend fun gameHasStarted() = waitIfPauseable {
         //TODO play animation: Game has started
@@ -22,13 +46,24 @@ class BoardViewModel(
         //TODO play animation: Game has ended
     }
 
+    suspend fun showRollDicesInterface(player: Player) = waitIfPauseable {
+        //TODO: display interface over the game board interface (empty dices)
+        // IF ITS A USER => Show Button
+        // ELSE (ITS AN AI) => Do Not Show Button
+        // VVVVVVVVV
+
+        when(player) {
+            is IA -> println("IA")
+            is User -> println("User")
+        }
+    }
+
     suspend fun showRollDiceButton() = waitIfPauseable {
         //TODO: Display the button to roll dice
         board.waitForResume()
         //TODO: And then the button will board.resumeGame()
     }
-
-    suspend fun showRollDiceAnimation(diceFaceResults: List<DiceFace>) = waitIfPauseable {
+    suspend fun showRollDicesAnimation(diceFaceResults: List<DiceFace>) = waitIfPauseable {
         // TODO: play animation
         //  maybe wou will need delay(TIME) or board.waitForResume() and board.resumeGame()
     }
@@ -58,12 +93,11 @@ class BoardViewModel(
         //TODO play animation: First player defined
     }
 
-
-
     private suspend fun waitIfPauseable(function: suspend () -> Unit) {
         if (isPaused.value == true)
             board.waitForResume()
         function()
     }
+
 
 }

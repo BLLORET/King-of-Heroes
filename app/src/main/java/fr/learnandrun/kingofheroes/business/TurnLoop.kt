@@ -7,6 +7,7 @@ class TurnLoop(
 ) : Iterable<Player>, Iterator<Player> {
 
     private lateinit var intLoop: IntLoop
+    private var actualTurn = 1
     private var actualRound = 1
 
     fun setFirstPlayer(player: Player) {
@@ -16,12 +17,15 @@ class TurnLoop(
     fun nextPlayer(): Player {
         check(::intLoop.isInitialized) { "You need to set first player before starting" }
         check(hasNext()) { "There is no next player alive!" }
+        actualTurn++
         return players[intLoop.nextValue { actualRound++ }]
             .takeUnless { it.isDead() }
             ?: nextPlayer()
     }
 
-    fun getActualRound() : Int = actualRound
+    fun isFirstTurn(): Boolean = actualTurn == 1
+
+    fun getActualRound(): Int = actualRound
 
     override fun iterator(): Iterator<Player> {
         return this

@@ -1,13 +1,33 @@
 package fr.learnandrun.kingofheroes.business
 
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
+import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 class IA(
-    board: Board,
     hero: Hero
-) : Player(board, hero) {
+) : Player(hero) {
 
-    override suspend fun rollDices(numberOfDice: Int): List<DiceFace> =
-        defaultRollDice(numberOfDice)
+    override suspend fun waitForRollClick(board: Board) {
+        delay(1500)
+    }
 
+    override suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>) {
+        dices.forEachIndexed { index, _ ->
+            if (Random.nextInt(0, 4) == 0)
+                dices[index] = null
+        }
+        delay(1500)
+    }
+
+    override suspend fun waitForEndRollClick(board: Board) {
+        delay(1500)
+    }
+
+    override suspend fun decreaseHealth(board: Board, value: Int) {
+        super.decreaseHealth(board, value)
+        // If the IA wants to leave the city (currently driven by random)
+        if (board.playerInsideCity == this && Random.nextBoolean())
+            board.playerInsideCity = null
+    }
 }

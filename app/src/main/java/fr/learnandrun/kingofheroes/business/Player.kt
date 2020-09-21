@@ -1,22 +1,48 @@
 package fr.learnandrun.kingofheroes.business
 
-import fr.learnandrun.kingofheroes.business.dice.Dice
+import androidx.lifecycle.MutableLiveData
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.tools.delegate.RangeDelegate
 
 abstract class Player(
-    val board: Board,
     val hero: Hero
 ) {
-    var health: Int by RangeDelegate(DEFAULT_HEALTH, MIN_HEALTH, MAX_HEALTH)
-    var victoryPoints: Int by RangeDelegate(DEFAULT_POINTS, MIN_POINTS, MAX_POINTS)
-    var energy: Int = 0
+    val healthLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_HEALTH)
+    val victoryPointsLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_POINTS)
+    val energyLiveData: MutableLiveData<Int> = MutableLiveData(DEFAULT_ENERGY)
+
+    private var health: Int by RangeDelegate(healthLiveData, MIN_HEALTH, MAX_HEALTH)
+    private var victoryPoints: Int by RangeDelegate(victoryPointsLiveData, MIN_POINTS, MAX_POINTS)
+    private var energy: Int by RangeDelegate(energyLiveData, MIN_ENERGY, MAX_ENERGY)
 
     fun isDead(): Boolean = health == MIN_HEALTH
 
     fun hasEnoughPointsToWin() = victoryPoints == MAX_POINTS
 
-    abstract suspend fun rollDices(numberOfDice: Int): List<DiceFace>
+    abstract suspend fun waitForRollClick(board: Board)
+    abstract suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>)
+    abstract suspend fun waitForEndRollClick(board: Board)
+
+    fun increaseHealth(value: Int = 1) {
+        health += value
+    }
+    open suspend fun decreaseHealth(board: Board, value: Int = 1) {
+        health -= value
+    }
+
+    fun increaseVictoryPoints(value: Int = 1) {
+        victoryPoints += value
+    }
+    fun decreaseVictoryPoints(value: Int = 1) {
+        victoryPoints -= value
+    }
+
+    fun increaseEnergy(value: Int = 1) {
+        energy += value
+    }
+    fun decreaseEnergy(value: Int = 1) {
+        energy -= value
+    }
 
     companion object {
         const val DEFAULT_HEALTH = 10
@@ -27,12 +53,8 @@ abstract class Player(
         const val MIN_POINTS = 0
         const val MAX_POINTS = 20
 
-        suspend fun Player.defaultRollDice(numberOfDice: Int): List<DiceFace> {
-            val diceFaceResults = generateSequence { Dice.roll() }
-                .take(numberOfDice)
-                .toList()
-            board.boardViewModel.showRollDiceAnimation(diceFaceResults)
-            return diceFaceResults
-        }
+        const val DEFAULT_ENERGY = 0
+        const val MIN_ENERGY = 0
+        const val MAX_ENERGY = Int.MAX_VALUE
     }
 }

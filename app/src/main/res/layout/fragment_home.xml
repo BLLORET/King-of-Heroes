@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/app_name" />
+        android:text="@string/app_name" />
 
     <Button
         android:id="@+id/home_play_button"
@@ -38,10 +38,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_title_text_view"
         app:layout_constraintVertical_bias="0.384"
-        tools:text="@string/play" />
+        android:text="@string/play" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/home_rules_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounded"
@@ -54,6 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_play_button"
         app:layout_constraintVertical_bias="0.827"
-        tools:text="@string/rules" />
+        android:text="@string/rules" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

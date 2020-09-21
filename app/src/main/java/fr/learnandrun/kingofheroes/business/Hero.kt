@@ -31,4 +31,9 @@ enum class Hero(
 
     fun getDisplayName(context: Context) = context.getString(displayNameId)
     fun getImage(context: Context) = ContextCompat.getDrawable(context, imageId)
+
+    companion object {
+        fun atIndex(index: Int?) =
+            values()[index ?: throw IllegalStateException("The current index must not be null")]
+    }
 }
