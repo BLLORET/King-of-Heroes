@@ -52,4 +52,5 @@
     <string name="character_selector_right_button">Character selector right button</string>
     <string name="background_image">Background image</string>
     <string name="rules_url">https://www.regledujeu.fr/king-of-tokyo/</string>
+    <string name="image_of_the_winner">Image of the winner</string>
 </resources>
