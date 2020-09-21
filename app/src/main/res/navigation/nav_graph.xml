@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_diceFragment_to_boardFragment2"
             app:destination="@id/boardFragment" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/finalScreenFragment"

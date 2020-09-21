@@ -9,9 +9,9 @@ import fr.learnandrun.kingofheroes.business.dice.DiceFace
 class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
     var isInit = false
+    lateinit var board: Board
     lateinit var players: List<Player>
 
-    private lateinit var board: Board
     private var isPaused = MutableLiveData(false)
 
     fun initGame(selectedHero: Hero) {

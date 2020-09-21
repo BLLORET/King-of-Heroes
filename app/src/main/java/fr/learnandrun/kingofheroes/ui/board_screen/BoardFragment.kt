@@ -77,13 +77,16 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             board_player4_stats_view
         )
 
-//        if (!isInit)
-//            boardViewModel.startGame()
-    }
+        boardViewModel.board.playerInsideCityLiveData.observe(viewLifecycleOwner) {
+            it?.let { player ->
+                board_player_in_city_image_view.setImageDrawable(
+                    player.hero.getImage(requireContext())
+                )
+            } ?: board_player_in_city_image_view.setImageDrawable(null)
+        }
 
-    // TODO: ASK DAVID MENAGER
-    fun resetViewModel() {
-        boardViewModel.resetGame()
+        if (!isInit)
+            boardViewModel.startGame()
     }
 
 }

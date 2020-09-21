@@ -13,11 +13,4 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    override fun onBackPressed() {
-        when (val currentFragment = supportFragmentManager.primaryNavigationFragment) {
-            is BoardFragment -> currentFragment.resetViewModel()
-        }
-        super.onBackPressed()
-    }
-
 }

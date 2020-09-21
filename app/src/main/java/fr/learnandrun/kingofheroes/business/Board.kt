@@ -1,6 +1,7 @@
 package fr.learnandrun.kingofheroes.business
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import fr.learnandrun.kingofheroes.business.dice.Dice
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
@@ -16,7 +17,11 @@ class Board(
     val players: List<Player>
 ) {
 
-    var playerInsideCity: Player? = null
+    val playerInsideCityLiveData: MutableLiveData<Player?> = MutableLiveData(null)
+
+    var playerInsideCity: Player?
+        get() = playerInsideCityLiveData.value
+        set(value) { playerInsideCityLiveData.value = value }
 
     private var gameStarted = false
     private val turnLoop = TurnLoop(players)

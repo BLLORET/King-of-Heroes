@@ -3,19 +3,14 @@ package fr.learnandrun.kingofheroes.ui.select_fighter_screen
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Hero
+import fr.learnandrun.kingofheroes.model.BoardViewModel
 import fr.learnandrun.kingofheroes.model.SelectFighterViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
-import fr.learnandrun.kingofheroes.tools.android.toast
-import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragmentDirections
 import kotlinx.android.synthetic.main.fragment_select_fighter.*
-import kotlin.math.max
-import kotlin.math.min
 
 class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) {
 
@@ -72,6 +67,8 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
         }
 
         select_fighter_choose_button.setOnClickListener {
+            val boardViewModel = ViewModelProvider(requireActivity()).get(BoardViewModel::class.java)
+            boardViewModel.resetGame()
             findNavController().navigate(
                 SelectFighterFragmentDirections.actionSelectFighterFragmentToBoardFragment(
                     Hero.atIndex(selectFighterViewModel.currentIndex.value)
