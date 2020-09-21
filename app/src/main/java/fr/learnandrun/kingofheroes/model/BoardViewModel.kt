@@ -1,12 +1,15 @@
 package fr.learnandrun.kingofheroes.model
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import fr.learnandrun.kingofheroes.business.*
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import kotlinx.coroutines.delay
 import java.lang.IllegalStateException
+import kotlin.coroutines.coroutineContext
 
 class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -21,6 +24,12 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     }
     var showBoardInterfaceLambda: () -> Unit = {
         throw IllegalStateException("This function must be overridden by the dice fragment")
+    }
+    var showRollDicesAnimationLambda: (dices: List<DiceFace?>) -> Unit = {
+        throw IllegalStateException("This function must be overridden by the dice fragment")
+    }
+    var triggerDeathLambda: (player: Player) -> Unit = {
+        throw IllegalStateException("This function must be overridden by the board fragment")
     }
 
     fun initGame(selectedHero: Hero) {
@@ -67,12 +76,14 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun showRollDicesAnimation(diceFaceResults: List<DiceFace>) = waitIfPauseable {
         // TODO: play animation
         //  maybe wou will need delay(TIME) or board.waitForResume() and board.resumeGame()
+        showRollDicesAnimationLambda(diceFaceResults)
+        delay(1500)
     }
 
     suspend fun showBoardInterface() {
-        delay(1500)
+        val nullDices: List<DiceFace?> = List(Board.DICE_AMOUNT) { null }
+        showRollDicesAnimationLambda(nullDices)
         showBoardInterfaceLambda()
-        delay(1500)
     }
 
     suspend fun playerHasWon(player: Player) = waitIfPauseable {
@@ -80,7 +91,7 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun playerTurnStart(player: Player) = waitIfPauseable {
-        //TODO play animation: Player turn start
+        delay(5000)
     }
 
     suspend fun playerTurnEnd(player: Player) = waitIfPauseable {
@@ -105,5 +116,13 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
         if (isPaused.value == true)
             board.waitForResume()
         function()
+    }
+
+    suspend fun defineFirstPlayerTurn() {
+        delay(2500)
+    }
+
+    suspend fun triggerDeath(player: Player) {
+        triggerDeathLambda(player)
     }
 }

@@ -1,9 +1,12 @@
 package fr.learnandrun.kingofheroes.ui.board_screen
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +15,7 @@ import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_board.*
 
@@ -31,6 +35,9 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
                 BoardFragmentDirections.actionBoardFragmentToDiceFragment(isUser)
             )
         }
+        boardViewModel.triggerDeathLambda = {
+            toast("${it.hero.getDisplayName(requireContext())} is dead")
+        }
 
         val isInit = boardViewModel.isInit
         if (!isInit)
@@ -43,15 +50,21 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             board_player_display_name_text_view: TextView,
             board_player_stats_view: StatsView
         ) {
+            player.healthLiveData.removeObservers(viewLifecycleOwner)
             player.healthLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.life = it
+                if (it == 0)
+                    ImageViewCompat.setImageTintList(board_player_card_image_view, ContextCompat.getColorStateList(requireContext(), R.color.transparentGray))
             }
+            player.victoryPointsLiveData.removeObservers(viewLifecycleOwner)
             player.victoryPointsLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.victory = it
             }
+            player.energyLiveData.removeObservers(viewLifecycleOwner)
             player.energyLiveData.observe(viewLifecycleOwner) {
                 board_player_stats_view.stamina = it
             }
+            //TODO: USE observable...
             board_player_card_image_view.setImageDrawable(player.hero.getImage(requireContext()))
             board_player_display_name_text_view.text = getString(
                 R.string.user_display_name_format,
@@ -84,6 +97,7 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             board_player4_stats_view
         )
 
+        boardViewModel.board.playerInsideCityLiveData.removeObservers(viewLifecycleOwner)
         boardViewModel.board.playerInsideCityLiveData.observe(viewLifecycleOwner) {
             it?.let { player ->
                 board_player_in_city_image_view.setImageDrawable(
