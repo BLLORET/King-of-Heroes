@@ -11,16 +11,17 @@ class User(
     }
 
     override suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>) {
-        //TODO("Not yet implemented")
         board.waitForResume()
     }
 
     override suspend fun waitForEndRollClick(board: Board) {
-        //TODO("Not yet implemented")
+        board.waitForResume()
     }
 
     override suspend fun decreaseHealth(board: Board, value: Int) {
         super.decreaseHealth(board, value)
-        //TODO("Not yet implemented")
+        // propose to leave the city if in city
+        //board.waitForResume()
+        //TODO
     }
 }

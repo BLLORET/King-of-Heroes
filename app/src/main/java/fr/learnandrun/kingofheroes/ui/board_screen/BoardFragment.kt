@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.User
-import fr.learnandrun.kingofheroes.model.BoardViewModel
+import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_board.*

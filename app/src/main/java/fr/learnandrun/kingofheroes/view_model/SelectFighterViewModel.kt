@@ -1,8 +1,7 @@
-package fr.learnandrun.kingofheroes.model
+package fr.learnandrun.kingofheroes.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.learnandrun.kingofheroes.business.Hero
 
 class SelectFighterViewModel : ViewModel() {
     val currentIndex: MutableLiveData<Int> = MutableLiveData(0)

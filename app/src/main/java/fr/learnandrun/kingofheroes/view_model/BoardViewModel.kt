@@ -1,21 +1,22 @@
-package fr.learnandrun.kingofheroes.model
+package fr.learnandrun.kingofheroes.view_model
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.*
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import kotlinx.coroutines.delay
 import java.lang.IllegalStateException
-import kotlin.coroutines.coroutineContext
 
 class BoardViewModel(application: Application) : AndroidViewModel(application) {
 
     var isInit = false
     lateinit var board: Board
     lateinit var players: List<Player>
+
+    val throwDiceClickNameLiveData: MutableLiveData<String> =
+        MutableLiveData(application.getString(R.string.btn_throw))
 
     private var isPaused = MutableLiveData(false)
 
@@ -54,6 +55,8 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
         isPaused = MutableLiveData(false)
     }
 
+    fun canSelectDices() = board.canSelectDices
+
     suspend fun gameHasStarted() = waitIfPauseable {
         //TODO play animation: Game has started
     }
@@ -77,7 +80,7 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
         delay(1500)
     }
 
-    suspend fun showBoardInterface() {
+    suspend fun showBoardInterface() = waitIfPauseable {
         val nullDices: List<DiceFace?> = List(Board.DICE_AMOUNT) { null }
         showRollDicesAnimationLambda(nullDices)
         showBoardInterfaceLambda()
@@ -109,13 +112,13 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
         //TODO play animation: First player defined
     }
 
+    suspend fun defineFirstPlayerTurn() = waitIfPauseable {
+        delay(2500)
+    }
+
     private suspend fun waitIfPauseable(function: suspend () -> Unit) {
         if (isPaused.value == true)
             board.waitForResume()
         function()
-    }
-
-    suspend fun defineFirstPlayerTurn() {
-        delay(2500)
     }
 }

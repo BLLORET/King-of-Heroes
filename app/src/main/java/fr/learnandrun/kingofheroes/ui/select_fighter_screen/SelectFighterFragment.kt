@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Hero
-import fr.learnandrun.kingofheroes.model.BoardViewModel
-import fr.learnandrun.kingofheroes.model.SelectFighterViewModel
+import fr.learnandrun.kingofheroes.view_model.BoardViewModel
+import fr.learnandrun.kingofheroes.view_model.SelectFighterViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import kotlinx.android.synthetic.main.fragment_select_fighter.*
 

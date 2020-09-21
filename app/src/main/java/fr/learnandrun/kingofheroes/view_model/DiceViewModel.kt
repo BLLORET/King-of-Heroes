@@ -1,4 +1,4 @@
-package fr.learnandrun.kingofheroes.model
+package fr.learnandrun.kingofheroes.view_model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

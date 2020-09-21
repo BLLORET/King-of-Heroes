@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,7 +13,7 @@ import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
-import fr.learnandrun.kingofheroes.model.BoardViewModel
+import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_dice.*
@@ -21,6 +22,32 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
 
     private lateinit var boardViewModel: BoardViewModel
     private val args : DiceFragmentArgs by navArgs()
+
+    private fun isDiceSelected(dice: ImageView): Boolean = dice.colorFilter != null
+
+    private fun isOneOrMoreDicesSelected(): Boolean =
+        isDiceSelected(dice_img_btn_dice_1) ||
+                isDiceSelected(dice_img_btn_dice_2) ||
+                isDiceSelected(dice_img_btn_dice_3) ||
+                isDiceSelected(dice_img_btn_dice_4) ||
+                isDiceSelected(dice_img_btn_dice_5) ||
+                isDiceSelected(dice_img_btn_dice_6)
+
+    private fun refreshInterface() {
+        if (isOneOrMoreDicesSelected())
+            dice_btn_throw.text = "THROW"
+        else
+            dice_btn_throw.text = "PASS"
+    }
+
+    private fun resetInterface() {
+        dice_img_btn_dice_1.clearColorFilter()
+        dice_img_btn_dice_2.clearColorFilter()
+        dice_img_btn_dice_3.clearColorFilter()
+        dice_img_btn_dice_4.clearColorFilter()
+        dice_img_btn_dice_5.clearColorFilter()
+        dice_img_btn_dice_6.clearColorFilter()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,9 +68,32 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             dice_btn_throw.visibility = View.INVISIBLE
             dice_btn_throw.isEnabled = false
         }
+        else {
+            dice_btn_throw.setOnClickListener {
+                resetInterface()
+                boardViewModel.board.resumeGame()
+            }
 
-        dice_btn_throw.setOnClickListener {
-            boardViewModel.board.resumeGame()
+            fun setDiceClick(dice: ImageView, index: Int) {
+                dice.setOnClickListener {
+                    if (boardViewModel.canSelectDices()) {
+                        if (!isDiceSelected(dice))
+                            dice.setColorFilter(
+                                ContextCompat.getColor(requireContext(), R.color.reRollDice))
+                        else
+                            dice.clearColorFilter()
+                        boardViewModel.board.selectedDices[index] = isDiceSelected(dice)
+                        refreshInterface()
+                    }
+                }
+            }
+
+            setDiceClick(dice_img_btn_dice_1, 0)
+            setDiceClick(dice_img_btn_dice_2, 1)
+            setDiceClick(dice_img_btn_dice_3, 2)
+            setDiceClick(dice_img_btn_dice_4, 3)
+            setDiceClick(dice_img_btn_dice_5, 4)
+            setDiceClick(dice_img_btn_dice_6, 5)
         }
 
         val currentPlayer = boardViewModel.board.getCurrentPlayer()
@@ -102,5 +152,9 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             dice_fighter_bottom_left_text_view,
             dice_fighter_bottom_left_stats_view
         )
+
+        boardViewModel.throwDiceClickNameLiveData.observe(viewLifecycleOwner) { value ->
+            dice_btn_throw.text = value
+        }
     }
 }

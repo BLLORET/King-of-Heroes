@@ -1,14 +1,15 @@
 package fr.learnandrun.kingofheroes.business
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.dice.Dice
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
-import fr.learnandrun.kingofheroes.model.BoardViewModel
+import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -20,6 +21,9 @@ class Board(
 
     private var currentPlayer: Player = players[0]
     val playerInsideCityLiveData: MutableLiveData<Player?> = MutableLiveData(null)
+
+    var canSelectDices: Boolean = false
+    val selectedDices: MutableList<Boolean> = MutableList(DICE_AMOUNT) { false }
 
     var playerInsideCity: Player?
         get() = playerInsideCityLiveData.value
@@ -152,17 +156,27 @@ class Board(
     private suspend fun rollDices(player: Player): List<DiceFace> {
         var tryRemaining = 3
         val dices: MutableList<DiceFace?> = MutableList(DICE_AMOUNT) { null }
+        canSelectDices = false
+        boardViewModel.throwDiceClickNameLiveData.value =
+            boardViewModel.getApplication<Application>().getString(R.string.btn_throw)
 
         // display the dices interface
         boardViewModel.showRollDicesInterface(player)
 
         // wait for the player to roll its dices
         player.waitForRollClick(this)
+        canSelectDices = true
 
         do {
+            boardViewModel.throwDiceClickNameLiveData.value =
+                boardViewModel.getApplication<Application>().getString(R.string.btn_validate)
+
             // roll dices for all null dices
             for (index in dices.indices) {
-                if (dices[index] == null) dices[index] = Dice.roll()
+                if (dices[index] == null) {
+                    dices[index] = Dice.roll()
+                    selectedDices[index] = false
+                }
             }
 
             // display the dices interface
@@ -170,18 +184,30 @@ class Board(
 
             // will set at null the dices to re roll
             player.waitForReRollOrPassClick(this, dices)
+            selectedDices.mapIndexed { index, isSelected -> if (isSelected) dices[index] = null }
         } while (--tryRemaining > 1 && dices.filter { it == null }.count() != 0)
+        canSelectDices = false
+        boardViewModel.throwDiceClickNameLiveData.value =
+            boardViewModel.getApplication<Application>().getString(R.string.btn_validate)
 
-        // roll dices for all null dices
-        for (index in dices.indices) {
-            if (dices[index] == null) dices[index] = Dice.roll()
+        if (tryRemaining == 1) {
+            // roll dices for all null dices
+            for (index in dices.indices) {
+                if (dices[index] == null) {
+                    dices[index] = Dice.roll()
+                    selectedDices[index] = false
+                }
+            }
+
+            // display the dices interface
+            boardViewModel.showRollDicesAnimation(dices.filterNotNull())
+
+            // button to end the roll dices phase
+            player.waitForEndRollClick(this)
         }
 
-        // display the dices interface
-        boardViewModel.showRollDicesAnimation(dices.filterNotNull())
-
-        // button to end the roll dices phase
-        player.waitForEndRollClick(this)
+        boardViewModel.throwDiceClickNameLiveData.value =
+            boardViewModel.getApplication<Application>().getString(R.string.btn_throw)
 
         boardViewModel.showBoardInterface()
 
