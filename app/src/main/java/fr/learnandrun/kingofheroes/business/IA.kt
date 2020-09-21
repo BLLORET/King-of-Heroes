@@ -9,7 +9,7 @@ class IA(
 ) : Player(hero) {
 
     override suspend fun waitForRollClick(board: Board) {
-        delay(1500)
+        delay(waitingTime)
     }
 
     override suspend fun waitForReRollOrPassClick(board: Board, dices: MutableList<DiceFace?>) {
@@ -17,11 +17,11 @@ class IA(
             if (Random.nextInt(0, 4) == 0)
                 dices[index] = null
         }
-        delay(1500)
+        delay(waitingTime)
     }
 
     override suspend fun waitForEndRollClick(board: Board) {
-        delay(1500)
+        delay(waitingTime)
     }
 
     override suspend fun decreaseHealth(board: Board, value: Int) {
@@ -29,5 +29,9 @@ class IA(
         // If the IA wants to leave the city (currently driven by random)
         if (board.playerInsideCity == this && Random.nextBoolean())
             board.playerInsideCity = null
+    }
+
+    companion object {
+        const val waitingTime: Long = 1000
     }
 }
