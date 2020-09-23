@@ -45,18 +45,20 @@
         android:id="@+id/board_player1_display_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/ant_man"
+        app:layout_constraintBottom_toTopOf="@+id/board_player1_stats_view"
         app:layout_constraintEnd_toEndOf="@+id/board_player1_stats_view"
-        app:layout_constraintStart_toStartOf="@+id/board_player1_stats_view"
-        app:layout_constraintTop_toTopOf="@+id/board_player1_card_image_view" />
+        app:layout_constraintStart_toStartOf="@+id/board_player1_stats_view" />
 
     <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/board_player1_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/board_player1_card_image_view"
         app:layout_constraintStart_toEndOf="@+id/board_player1_card_image_view"
-        app:layout_constraintTop_toBottomOf="@id/board_player1_display_name_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/board_player1_card_image_view" />
 
     <ImageView
         android:id="@+id/board_player2_card_image_view"
@@ -73,18 +75,20 @@
         android:id="@+id/board_player2_display_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/ant_man"
+        app:layout_constraintBottom_toTopOf="@+id/board_player2_stats_view"
         app:layout_constraintEnd_toEndOf="@+id/board_player2_stats_view"
-        app:layout_constraintStart_toStartOf="@+id/board_player2_stats_view"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/board_player2_stats_view" />
 
     <fr.learnandrun.kingofheroes.ui.view.StatsView
         android:id="@+id/board_player2_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/board_player2_card_image_view"
         app:layout_constraintEnd_toStartOf="@+id/board_player2_card_image_view"
-        app:layout_constraintTop_toBottomOf="@id/board_player2_display_name_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/board_player2_card_image_view" />
 
     <ImageView
         android:id="@+id/board_player3_card_image_view"
@@ -101,16 +105,18 @@
         android:id="@+id/board_player3_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/board_player3_display_name_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/board_player3_card_image_view" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/board_player3_card_image_view"
+        app:layout_constraintEnd_toStartOf="@+id/board_player3_card_image_view"
+        app:layout_constraintTop_toTopOf="@+id/board_player3_card_image_view" />
 
     <TextView
         android:id="@+id/board_player3_display_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/ant_man"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/board_player3_stats_view"
         app:layout_constraintEnd_toEndOf="@+id/board_player3_stats_view"
         app:layout_constraintStart_toStartOf="@+id/board_player3_stats_view" />
 
@@ -118,6 +124,8 @@
         android:id="@+id/board_player4_card_image_view"
         android:layout_width="150dp"
         android:layout_height="175dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/img_desc_card_fighter"
         android:src="@drawable/ant_man"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -127,9 +135,9 @@
         android:id="@+id/board_player4_display_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/ant_man"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/board_player4_stats_view"
         app:layout_constraintEnd_toEndOf="@+id/board_player4_stats_view"
         app:layout_constraintStart_toEndOf="@+id/board_player4_card_image_view"
         app:layout_constraintStart_toStartOf="@+id/board_player4_stats_view" />
@@ -138,7 +146,9 @@
         android:id="@+id/board_player4_stats_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/board_player4_display_name_text_view"
-        app:layout_constraintStart_toEndOf="@+id/board_player4_card_image_view" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/board_player4_card_image_view"
+        app:layout_constraintStart_toEndOf="@+id/board_player4_card_image_view"
+        app:layout_constraintTop_toTopOf="@+id/board_player4_card_image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

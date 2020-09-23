@@ -26,7 +26,7 @@
     <string name="img_desc_board_game">Picture of the bord game</string>
     <string name="img_desc_background">Background of the screen</string>
     <string name="img_desc_Dice">Picture of the dice</string>
-    <string name="you">(You)</string>
+    <string name="you">\u0020(You)</string>
 
     <string name="zero_value">0</string>
     <string name="max_victory_points">%d / 20</string>
