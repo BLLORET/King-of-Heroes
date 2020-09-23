@@ -1,0 +1,57 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutHomeFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.learnandrun.kingofheroes.ui.home_screen.HomeFragment">
+
+    <TextView
+        android:id="@+id/home_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:fontFamily="@font/marvel"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="95sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/home_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="150sp"
+        android:background="@drawable/btn_rounded"
+        android:fontFamily="@font/marvel"
+        android:text="@string/play"
+        android:textColor="#FFB751"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_title_text_view"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <Button
+        android:id="@+id/home_rules_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_rounded"
+        android:fontFamily="@font/marvel"
+        android:text="@string/rules"
+        android:textColor="#FFB751"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_play_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Attack
 import fr.learnandrun.kingofheroes.business.Player
-import fr.learnandrun.kingofheroes.model.ShopViewModel
+import fr.learnandrun.kingofheroes.view_model.ShopViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import kotlinx.android.synthetic.main.fragment_shop.*
 
