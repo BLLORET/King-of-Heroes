@@ -7,7 +7,7 @@ class TurnLoop(
 ) : Iterable<Player>, Iterator<Player> {
 
     private lateinit var intLoop: IntLoop
-    private var actualTurn = 1
+    private var actualTurn = 0
     private var actualRound = 1
 
     fun setFirstPlayer(player: Player) {

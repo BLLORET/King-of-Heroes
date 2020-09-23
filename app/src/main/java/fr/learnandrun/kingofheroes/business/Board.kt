@@ -30,7 +30,7 @@ class Board(
         set(value) { playerInsideCityLiveData.value = value }
 
     private var gameStarted = false
-    private val turnLoop = TurnLoop(players)
+    private var turnLoop = TurnLoop(players)
 
     /* Coroutine logic */
     private var job: Job? = null
@@ -70,6 +70,8 @@ class Board(
 
                 currentPlayer = player
                 boardViewModel.defineFirstPlayerTurn()
+
+                boardViewModel.diceRollRemaining.value = 1
                 // display the dices interface
                 boardViewModel.showRollDicesInterface(player)
 
@@ -102,6 +104,7 @@ class Board(
         } while (playersCompetitor.size != 1 && boardViewModel.loopDefineFirstPlayer().let { true })
 
         val firstPlayer = playersCompetitor.first()
+        turnLoop = TurnLoop(players)
         turnLoop.setFirstPlayer(firstPlayer)
         boardViewModel.firstPlayerDefined(firstPlayer)
     }
@@ -141,7 +144,11 @@ class Board(
         startTurn(player)
         if (!playerHasWon(player)) {
             val dices = rollDices(player)
+
+            boardViewModel.showBoardInterface()
+
             resolveDices(dices, player)
+
         }
     }
 
@@ -162,11 +169,15 @@ class Board(
         boardViewModel.throwDiceClickNameLiveData.value =
             boardViewModel.getApplication<Application>().getString(R.string.btn_throw)
 
+
+        boardViewModel.diceRollRemaining.value = tryRemaining
         // display the dices interface
         boardViewModel.showRollDicesInterface(player)
 
         // wait for the player to roll its dices
         player.waitForRollClick(this)
+
+        boardViewModel.diceRollRemaining.value = --tryRemaining
         canSelectDices = true
 
         do {
@@ -186,13 +197,14 @@ class Board(
 
             // will set at null the dices to re roll
             player.waitForReRollOrPassClick(this, dices)
+            boardViewModel.diceRollRemaining.value = --tryRemaining
             selectedDices.mapIndexed { index, isSelected -> if (isSelected) dices[index] = null }
-        } while (--tryRemaining > 1 && dices.filter { it == null }.count() != 0)
+        } while (tryRemaining > 0 && dices.filter { it == null }.count() != 0)
         canSelectDices = false
         boardViewModel.throwDiceClickNameLiveData.value =
             boardViewModel.getApplication<Application>().getString(R.string.btn_validate)
 
-        if (tryRemaining == 1) {
+        if (dices.filter { it == null }.count() != 0) {
             // roll dices for all null dices
             for (index in dices.indices) {
                 if (dices[index] == null) {
@@ -207,11 +219,6 @@ class Board(
             // button to end the roll dices phase
             player.waitForEndRollClick(this)
         }
-
-        boardViewModel.throwDiceClickNameLiveData.value =
-            boardViewModel.getApplication<Application>().getString(R.string.btn_throw)
-
-        boardViewModel.showBoardInterface()
 
         return dices.filterNotNull()
     }

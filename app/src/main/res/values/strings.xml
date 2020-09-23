@@ -31,7 +31,8 @@
     <string name="zero_value">0</string>
     <string name="max_victory_points">%d / 20</string>
     <string name="max_life">%d / 10</string>
-    <string name="dice_turn">%d / 3</string>
+    <string name="dice_turn">%d roll remaining</string>
+    <string name="dice_turns">%d rolls remaining</string>
 
     <string name="btn_throw">THROW</string>
     <string name="btn_validate">VALIDATE</string>
@@ -47,7 +48,7 @@
     <string name="choose">Choose</string>
     <string name="user_display_name_format">%s%s</string>
 
-    <string name="win_string">You are the king of Hereos ! </string>
+    <string name="win_string">You are the king of Heroes ! </string>
     <string name="lose_string">You lost ! </string>
     <string name="replay">Replay</string>
     <string name="character_selector_left_button">Character selector left button</string>

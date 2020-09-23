@@ -107,6 +107,9 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
         boardViewModel.proposeToLeaveTheCityLambda = {
             LeaveCityAlertView(requireContext()).suspendShow()
         }
+        boardViewModel.showWinnerInterface = {
+            findNavController().navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment(it.hero, it is User))
+        }
 
         if (!isInit)
             boardViewModel.startGame()

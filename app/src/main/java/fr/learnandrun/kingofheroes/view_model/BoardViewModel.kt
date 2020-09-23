@@ -16,6 +16,7 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var board: Board
     lateinit var players: List<Player>
 
+    val diceRollRemaining = MutableLiveData(1)
     val throwDiceClickNameLiveData: MutableLiveData<String> =
         MutableLiveData(application.getString(R.string.btn_throw))
 
@@ -26,6 +27,9 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     }
     var showBoardInterfaceLambda: () -> Unit = {
         throw IllegalStateException("This function must be overridden by the dice fragment")
+    }
+    var showWinnerInterface: (player: Player) -> Unit = {
+        throw IllegalStateException("This function must be overridden by the board fragment")
     }
     var showRollDicesAnimationLambda: (dices: List<DiceFace?>) -> Unit = {
         throw IllegalStateException("This function must be overridden by the dice fragment")
@@ -91,7 +95,7 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun playerHasWon(player: Player) = waitIfPauseable {
-        //TODO play animation of a player who has won
+        showWinnerInterface(player)
     }
 
     suspend fun playerTurnStart(player: Player) = waitIfPauseable {

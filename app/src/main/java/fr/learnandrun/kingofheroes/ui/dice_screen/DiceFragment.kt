@@ -15,6 +15,8 @@ import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragmentDirections
+import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_dice.*
 
@@ -60,6 +62,20 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
                 DiceFragmentDirections.actionDiceFragmentToBoardFragment(
                     boardViewModel.players[0].hero
                 )
+            )
+        }
+
+        boardViewModel.proposeToLeaveTheCityLambda = {
+            LeaveCityAlertView(requireContext()).suspendShow()
+        }
+        boardViewModel.showWinnerInterface = {
+            findNavController().navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment(it.hero, it is User))
+        }
+
+        boardViewModel.diceRollRemaining.observe(viewLifecycleOwner) {
+            dice_turn_text_view.text = getString(
+                if (it > 1) R.string.dice_turns else R.string.dice_turn,
+                it
             )
         }
 

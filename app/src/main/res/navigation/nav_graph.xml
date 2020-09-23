@@ -21,7 +21,8 @@
         tools:layout="@layout/fragment_select_fighter" >
         <action
             android:id="@+id/action_selectFighterFragment_to_boardFragment"
-            app:destination="@id/boardFragment" />
+            app:destination="@id/boardFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/boardFragment"
@@ -30,10 +31,12 @@
         tools:layout="@layout/fragment_board" >
         <action
             android:id="@+id/action_boardFragment_to_diceFragment"
-            app:destination="@id/diceFragment" />
+            app:destination="@id/diceFragment"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_boardFragment_to_finalScreenFragment"
-            app:destination="@id/finalScreenFragment" />
+            app:destination="@id/finalScreenFragment"
+            app:popUpTo="@id/homeFragment" />
         <argument
             android:name="selectedHero"
             app:argType="fr.learnandrun.kingofheroes.business.Hero" />
@@ -45,7 +48,8 @@
         tools:layout="@layout/fragment_dice" >
         <action
             android:id="@+id/action_diceFragment_to_boardFragment"
-            app:destination="@id/boardFragment" />
+            app:destination="@id/boardFragment"
+            app:popUpTo="@id/homeFragment" />
         <argument
             android:name="isUser"
             app:argType="boolean" />
@@ -60,5 +64,15 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="winner"
+            app:argType="fr.learnandrun.kingofheroes.business.Hero" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_finalScreenFragment_to_selectFighterFragment"
+            app:destination="@id/selectFighterFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
 </navigation>
