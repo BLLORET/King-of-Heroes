@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.*
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
+import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import kotlinx.coroutines.delay
 import java.lang.IllegalStateException
 
@@ -28,6 +29,9 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
     }
     var showRollDicesAnimationLambda: (dices: List<DiceFace?>) -> Unit = {
         throw IllegalStateException("This function must be overridden by the dice fragment")
+    }
+    var proposeToLeaveTheCityLambda: suspend () -> Boolean = {
+        throw IllegalStateException("This function must be overridden by the board fragment")
     }
 
     fun initGame(selectedHero: Hero) {
@@ -121,4 +125,6 @@ class BoardViewModel(application: Application) : AndroidViewModel(application) {
             board.waitForResume()
         function()
     }
+
+    suspend fun proposeToLeaveTheCity(): Boolean = proposeToLeaveTheCityLambda()
 }

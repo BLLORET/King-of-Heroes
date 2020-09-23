@@ -4,10 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : DefaultFragment(R.layout.fragment_home) {

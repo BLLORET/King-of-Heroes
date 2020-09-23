@@ -139,8 +139,10 @@ class Board(
 
     private suspend fun playTurn(player: Player) {
         startTurn(player)
-        val dices = rollDices(player)
-        resolveDices(dices, player)
+        if (!playerHasWon(player)) {
+            val dices = rollDices(player)
+            resolveDices(dices, player)
+        }
     }
 
     private fun startTurn(player: Player) {
@@ -219,27 +221,42 @@ class Board(
         var numberOfTwo = 0
         var numberOfThree = 0
 
+        var numberOfHeart = 0
+        var numberOfEnergy = 0
+        var numberOfSlaps = 0
         for (dice in dices) {
             when (dice) {
-                DiceFace.HEART -> if (playerInsideCity != player) player.increaseHealth()
-                DiceFace.LIGHTNING -> player.increaseEnergy()
-                DiceFace.SLAP -> if (!turnLoop.isFirstTurn()) slapPlayers(player)
+                DiceFace.HEART -> numberOfHeart++
+                DiceFace.LIGHTNING -> numberOfEnergy++
+                DiceFace.SLAP -> numberOfSlaps++
                 DiceFace.ONE -> numberOfOne++
                 DiceFace.TWO -> numberOfTwo++
                 DiceFace.THREE -> numberOfThree++
             }
         }
 
-        if (numberOfOne > 3) player.increaseVictoryPoints(1 + (numberOfOne - 3))
-        if (numberOfTwo > 3) player.increaseVictoryPoints(2 + (numberOfTwo - 3))
-        if (numberOfThree > 3) player.increaseVictoryPoints(3 + (numberOfThree - 3))
+        if (playerInsideCity != player && numberOfHeart > 0)
+            player.increaseHealth(numberOfHeart)
+
+        if (numberOfEnergy > 0)
+            player.increaseEnergy(numberOfEnergy)
+
+        if (!turnLoop.isFirstTurn() && numberOfSlaps > 0)
+            slapPlayers(player, numberOfSlaps)
+
+        if (numberOfOne >= 3)
+            player.increaseVictoryPoints(1 + (numberOfOne - 3))
+        if (numberOfTwo >= 3)
+            player.increaseVictoryPoints(2 + (numberOfTwo - 3))
+        if (numberOfThree >= 3)
+            player.increaseVictoryPoints(3 + (numberOfThree - 3))
     }
 
-    private suspend fun slapPlayers(player: Player) {
+    private suspend fun slapPlayers(player: Player, nbSlaps: Int) {
         if (playerInsideCity != player)
-            playerInsideCity?.decreaseHealth(this)
+            playerInsideCity?.decreaseHealth(this, nbSlaps)
         else
-            players.filter { it != player }.forEach { it.decreaseHealth(this) }
+            players.filter { it != player }.forEach { it.decreaseHealth(this, nbSlaps) }
     }
 
     fun getCurrentPlayer(): Player = currentPlayer

@@ -20,8 +20,9 @@ class User(
 
     override suspend fun decreaseHealth(board: Board, value: Int) {
         super.decreaseHealth(board, value)
-        // propose to leave the city if in city
-        //board.waitForResume()
-        //TODO
+        if (board.playerInsideCity == this && !isDead()) {
+            if (board.boardViewModel.proposeToLeaveTheCity())
+                board.playerInsideCity = null
+        }
     }
 }

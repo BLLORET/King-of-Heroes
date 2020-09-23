@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.learnandrun.kingofheroes.R
@@ -13,8 +14,11 @@ import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_board.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BoardFragment : DefaultFragment(R.layout.fragment_board) {
 
@@ -99,6 +103,9 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
                     player.hero.getImage(requireContext())
                 )
             } ?: board_player_in_city_image_view.setImageDrawable(null)
+        }
+        boardViewModel.proposeToLeaveTheCityLambda = {
+            LeaveCityAlertView(requireContext()).suspendShow()
         }
 
         if (!isInit)

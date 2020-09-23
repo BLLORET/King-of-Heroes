@@ -35,9 +35,9 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
 
     private fun refreshInterface() {
         if (isOneOrMoreDicesSelected())
-            dice_btn_throw.text = "THROW"
+            dice_btn_throw.text = getString(R.string.btn_throw)
         else
-            dice_btn_throw.text = "PASS"
+            dice_btn_throw.text = getString(R.string.btn_validate)
     }
 
     private fun resetInterface() {

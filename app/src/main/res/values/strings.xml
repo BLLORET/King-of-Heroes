@@ -56,4 +56,7 @@
     <string name="rules_url">https://www.regledujeu.fr/king-of-tokyo/</string>
     <string name="image_of_the_winner">Image of the winner</string>
     <string name="shop_buy">Buy an attack?</string>
+    <string name="leave_button">Leave</string>
+    <string name="stay_button">Stay</string>
+    <string name="alert_leave_city_text">Do you want to leave the city?</string>
 </resources>

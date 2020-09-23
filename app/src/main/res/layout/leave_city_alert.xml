@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/leave_city_alert"
+    android:backgroundTint="@color/transparentGray"
+    android:background="@drawable/btn_rounded"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/leave_city_alert_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_leave_city_text"
+        android:textSize="25sp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/leave_city_alert_leave_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/leave_city_alert_leave_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leave_button"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/leave_city_alert_stay_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leave_city_alert_text_view" />
+
+    <Button
+        android:id="@+id/leave_city_alert_stay_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stay_button"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_green_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/leave_city_alert_leave_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/leave_city_alert_leave_button"
+        app:layout_constraintTop_toTopOf="@+id/leave_city_alert_leave_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
