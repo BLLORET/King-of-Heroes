@@ -1,4 +1,4 @@
-package fr.learnandrun.kingofheroes.model
+package fr.learnandrun.kingofheroes.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
