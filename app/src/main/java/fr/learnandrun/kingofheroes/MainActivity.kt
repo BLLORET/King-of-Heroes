@@ -2,15 +2,22 @@ package fr.learnandrun.kingofheroes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragment
-import fr.learnandrun.kingofheroes.ui.home_screen.HomeFragment
-import fr.learnandrun.kingofheroes.ui.select_fighter_screen.SelectFighterFragment
+import fr.learnandrun.kingofheroes.business.Board
+import org.koin.dsl.module
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupKoin()
         setContentView(R.layout.activity_main)
     }
 
+    private fun setupKoin() {
+        val boardModule = module {
+            single {
+                Board()
+            }
+        }
+    }
 }

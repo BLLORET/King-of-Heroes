@@ -19,6 +19,8 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //TODO CREATE BOARD HERE
+
         selectFighterViewModel = ViewModelProvider(this)
             .get(SelectFighterViewModel::class.java)
 

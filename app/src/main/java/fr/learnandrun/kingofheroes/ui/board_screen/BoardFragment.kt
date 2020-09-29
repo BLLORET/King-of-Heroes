@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,24 +23,10 @@ import kotlinx.coroutines.withContext
 
 class BoardFragment : DefaultFragment(R.layout.fragment_board) {
 
-    private lateinit var boardViewModel: BoardViewModel
-    private val args : BoardFragmentArgs by navArgs()
+    private val boardViewModel: BoardViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Initialize the board view model
-        boardViewModel = ViewModelProvider(requireActivity()).get(BoardViewModel::class.java)
-
-        boardViewModel.showRollDicesInterfaceLambda = { isUser ->
-            findNavController().navigate(
-                BoardFragmentDirections.actionBoardFragmentToDiceFragment(isUser)
-            )
-        }
-
-        val isInit = boardViewModel.isInit
-        if (!isInit)
-            boardViewModel.initGame(args.selectedHero)
 
         // TODO: ASK DAVID MENAGER
         fun linkPlayerToView(
@@ -110,8 +97,5 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
         boardViewModel.showWinnerInterface = {
             findNavController().navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment(it.hero, it is User))
         }
-
-        if (!isInit)
-            boardViewModel.startGame()
     }
 }
