@@ -1,15 +1,15 @@
 package fr.learnandrun.kingofheroes.view_model
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import fr.learnandrun.kingofheroes.business.dice.DiceFace
+import androidx.lifecycle.ViewModel
 
-class DiceViewModel(application: Application): AndroidViewModel(application) {
+class DiceViewModel(val partyViewModel: PartyViewModel): ViewModel() {
 
-    val dices: MutableLiveData<List<DiceFace?>> = MutableLiveData(
-        generateSequence { null }.take(6).toList()
-    )
+    fun selectDice(index: Int) {
+        partyViewModel.dicePool.getDice(index).selectSwap()
+    }
 
+    fun throwOrPass() {
+        partyViewModel.resumeGame()
+    }
 
 }
