@@ -1,12 +1,10 @@
 package fr.learnandrun.kingofheroes.business
 
-import android.content.Context
-import androidx.core.content.ContextCompat
 import fr.learnandrun.kingofheroes.R
 
 enum class Hero(
-    private val displayNameId: Int,
-    private val imageId: Int
+    val displayNameId: Int,
+    val imageId: Int
 ) {
     ANT_MAN(R.string.ant_man, R.drawable.ant_man),
     AQUAMAN(R.string.aquaman, R.drawable.aquaman),
@@ -28,9 +26,6 @@ enum class Hero(
     SUPERMAN(R.string.superman, R.drawable.superman),
     THOR(R.string.thor, R.drawable.thor),
     WONDER_WOMAN(R.string.wonder_woman, R.drawable.wonder_woman);
-
-    fun getDisplayName(context: Context) = context.getString(displayNameId)
-    fun getImage(context: Context) = ContextCompat.getDrawable(context, imageId)
 
     companion object {
         fun atIndex(index: Int?) =
