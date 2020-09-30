@@ -1,11 +1,15 @@
 package fr.learnandrun.kingofheroes.view_model
 
 import androidx.lifecycle.ViewModel
-import fr.learnandrun.kingofheroes.business.Board
+import androidx.lifecycle.viewModelScope
+import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
+import kotlinx.coroutines.launch
 
-class BoardViewModel(
-    val board: Board
-) : ViewModel() {
+class BoardViewModel(val partyViewModel: PartyViewModel) : ViewModel() {
 
+    fun leaveTheCity(leaveTheCityAlertView: LeaveCityAlertView) = viewModelScope.launch {
+        val leaveCity = leaveTheCityAlertView.suspendShow()
+        partyViewModel.resumeLeaveCity(leaveCity)
+    }
 
 }
