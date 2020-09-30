@@ -47,9 +47,6 @@
             android:id="@+id/action_diceFragment_to_boardFragment"
             app:destination="@id/boardFragment"
             app:popUpTo="@id/homeFragment" />
-        <argument
-            android:name="isUser"
-            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/finalScreenFragment"
