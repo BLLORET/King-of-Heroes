@@ -5,97 +5,98 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import fr.learnandrun.kingofheroes.R
-import fr.learnandrun.kingofheroes.business.Player
+import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import fr.learnandrun.kingofheroes.ui.view.StatsView
 import kotlinx.android.synthetic.main.fragment_board.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class BoardFragment : DefaultFragment(R.layout.fragment_board) {
 
-    private val boardViewModel: BoardViewModel by viewModels()
+    private val partyViewModel: PartyViewModel by sharedViewModel()
+    private val boardViewModel: BoardViewModel by viewModel { parametersOf(partyViewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: ASK DAVID MENAGER
-        fun linkPlayerToView(
-            player: Player,
-            board_player_card_image_view: ImageView,
-            board_player_display_name_text_view: TextView,
-            board_player_stats_view: StatsView
-        ) {
-            player.healthLiveData.removeObservers(viewLifecycleOwner)
-            player.healthLiveData.observe(viewLifecycleOwner) {
-                board_player_stats_view.life = it
-                if (it == 0)
-                    board_player_card_image_view.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.looseGray))
-            }
-            player.victoryPointsLiveData.removeObservers(viewLifecycleOwner)
-            player.victoryPointsLiveData.observe(viewLifecycleOwner) {
-                board_player_stats_view.victory = it
-            }
-            player.energyLiveData.removeObservers(viewLifecycleOwner)
-            player.energyLiveData.observe(viewLifecycleOwner) {
-                board_player_stats_view.stamina = it
-            }
-            //TODO: USE observable...
-            board_player_card_image_view.setImageDrawable(player.hero.getImage(requireContext()))
-            board_player_display_name_text_view.text = getString(
-                R.string.user_display_name_format,
-                player.hero.getDisplayName(requireContext()),
-                if (player is User) getString(R.string.you) else ""
-            )
-        }
-        linkPlayerToView(
-            boardViewModel.players[0],
-            board_player1_card_image_view,
-            board_player1_display_name_text_view,
-            board_player1_stats_view
-        )
-        linkPlayerToView(
-            boardViewModel.players[1],
-            board_player2_card_image_view,
-            board_player2_display_name_text_view,
-            board_player2_stats_view
-        )
-        linkPlayerToView(
-            boardViewModel.players[2],
-            board_player3_card_image_view,
-            board_player3_display_name_text_view,
-            board_player3_stats_view
-        )
-        linkPlayerToView(
-            boardViewModel.players[3],
-            board_player4_card_image_view,
-            board_player4_display_name_text_view,
-            board_player4_stats_view
+        fun drawableOf(id: Int) = ContextCompat.getDrawable(requireContext(), id)
+        fun colorOf(id: Int) = ContextCompat.getColor(requireContext(), id)
+
+        data class PlayerInfoView(
+            val playerCardImageView: ImageView,
+            val playerDisplayNameTextView: TextView,
+            val playerStatsView: StatsView
         )
 
-        boardViewModel.board.playerInsideCityLiveData.removeObservers(viewLifecycleOwner)
-        boardViewModel.board.playerInsideCityLiveData.observe(viewLifecycleOwner) {
-            it?.let { player ->
-                board_player_in_city_image_view.setImageDrawable(
-                    player.hero.getImage(requireContext())
+        val listPlayersViews = listOf(
+            PlayerInfoView(
+                board_player1_card_image_view,
+                board_player1_display_name_text_view,
+                board_player1_stats_view
+            ),
+            PlayerInfoView(
+                board_player2_card_image_view,
+                board_player2_display_name_text_view,
+                board_player2_stats_view
+            ),
+            PlayerInfoView(
+                board_player3_card_image_view,
+                board_player3_display_name_text_view,
+                board_player3_stats_view
+            ),
+            PlayerInfoView(
+                board_player4_card_image_view,
+                board_player4_display_name_text_view,
+                board_player4_stats_view
+            )
+        )
+
+        listPlayersViews.forEachIndexed { index, playerInfoView ->
+            val player = partyViewModel.board.players[index]
+            playerInfoView.apply {
+                playerCardImageView.setImageDrawable(drawableOf(player.hero.imageId))
+                playerDisplayNameTextView.text = getString(R.string.user_display_name_format,
+                    getString(player.hero.displayNameId),
+                    if (player is User) getString(R.string.you) else ""
                 )
-            } ?: board_player_in_city_image_view.setImageDrawable(null)
+                player.healthLiveData.observe(viewLifecycleOwner) {
+                    playerStatsView.life = it
+                    if (it == 0) playerCardImageView.setColorFilter(colorOf(R.color.looseGray))
+                }
+                player.victoryPointsLiveData.observe(viewLifecycleOwner) {
+                    playerStatsView.victory = it
+                }
+                player.energyLiveData.observe(viewLifecycleOwner) {
+                    playerStatsView.stamina = it
+                }
+            }
         }
-        boardViewModel.proposeToLeaveTheCityLambda = {
-            LeaveCityAlertView(requireContext()).suspendShow()
+
+        partyViewModel.board.playerInsideCityLive.observe(viewLifecycleOwner) {
+            board_player_in_city_image_view.setImageDrawable(it?.hero?.imageId?.let(::drawableOf))
         }
-        boardViewModel.showWinnerInterface = {
-            findNavController().navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment(it.hero, it is User))
+
+        partyViewModel.proposeToLeaveTheCityEvent.subscribe(viewLifecycleOwner) {
+            boardViewModel.leaveTheCity(LeaveCityAlertView(requireContext()))
         }
+
+        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
+            toast(getString(it))
+        }
+
+        partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
+            findNavController().navigate(it)
+        }
+
+        partyViewModel.resumeGame()
     }
+
 }
