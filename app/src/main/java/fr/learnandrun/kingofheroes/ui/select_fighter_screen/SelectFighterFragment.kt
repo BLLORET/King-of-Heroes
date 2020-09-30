@@ -3,79 +3,68 @@ package fr.learnandrun.kingofheroes.ui.select_fighter_screen
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
-import fr.learnandrun.kingofheroes.business.Hero
-import fr.learnandrun.kingofheroes.view_model.BoardViewModel
-import fr.learnandrun.kingofheroes.view_model.SelectFighterViewModel
+import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.tools.android.setPushAndOnClick
+import fr.learnandrun.kingofheroes.tools.android.toast
+import fr.learnandrun.kingofheroes.view_model.SelectFighterViewModel
 import kotlinx.android.synthetic.main.fragment_select_fighter.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) {
 
-    private lateinit var selectFighterViewModel: SelectFighterViewModel
+    private val partyViewModel: PartyViewModel by sharedViewModel()
+    private val selectFighterViewModel: SelectFighterViewModel by viewModel { parametersOf(partyViewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO CREATE BOARD HERE
+        fun drawableOf(id: Int) = ContextCompat.getDrawable(requireContext(), id)
 
-        selectFighterViewModel = ViewModelProvider(this)
-            .get(SelectFighterViewModel::class.java)
-
-        selectFighterViewModel.currentIndex.observe(viewLifecycleOwner) { currentIndex ->
-
-            select_fighter_left_image_view.setImageDrawable(
-                if (currentIndex > 0)
-                    Hero.atIndex(currentIndex - 1).getImage(requireContext())
-                else
-                    null
-            )
-            select_fighter_center_image_view.setImageDrawable(
-                Hero.atIndex(currentIndex).getImage(requireContext())
-            )
-            select_fighter_right_image_view.setImageDrawable(
-                if (currentIndex < Hero.values().size - 1)
-                    Hero.atIndex(currentIndex + 1).getImage(requireContext())
-                else
-                    null
-            )
-
-            select_fighter_name_text_view.text =
-                Hero.atIndex(currentIndex).getDisplayName(requireContext())
-
-
-            select_fighter_previous_button.visibility = when {
-                currentIndex > 0 -> View.VISIBLE
-                else -> View.GONE
-            }
-            select_fighter_next_button.visibility = when {
-                currentIndex < Hero.values().size - 1 -> View.VISIBLE
-                else -> View.GONE
-            }
+        selectFighterViewModel.backArrowIsVisibleLive.observe(viewLifecycleOwner) {
+            select_fighter_previous_button.visibility = it
         }
 
-        select_fighter_previous_button.setOnClickListener {
-            selectFighterViewModel.apply {
-                currentIndex.value = currentIndex.value?.minus(1)
-            }
+        selectFighterViewModel.nextArrowIsVisibleLive.observe(viewLifecycleOwner) {
+            select_fighter_next_button.visibility = it
         }
 
-        select_fighter_next_button.setOnClickListener {
-            selectFighterViewModel.apply {
-                currentIndex.value = currentIndex.value?.plus(1)
-            }
+        selectFighterViewModel.imageBackIdLive.observe(viewLifecycleOwner) {
+            select_fighter_left_image_view.setImageDrawable(it?.let(::drawableOf))
         }
 
-        select_fighter_choose_button.setOnClickListener {
-            val boardViewModel = ViewModelProvider(requireActivity()).get(BoardViewModel::class.java)
-            boardViewModel.resetGame()
-            findNavController().navigate(
-                SelectFighterFragmentDirections.actionSelectFighterFragmentToBoardFragment(
-                    Hero.atIndex(selectFighterViewModel.currentIndex.value)
-                )
-            )
+        selectFighterViewModel.imageCurrentIdLive.observe(viewLifecycleOwner) {
+            select_fighter_center_image_view.setImageDrawable(it?.let(::drawableOf))
         }
+
+        selectFighterViewModel.imageNextIdLive.observe(viewLifecycleOwner) {
+            select_fighter_right_image_view.setImageDrawable(it?.let(::drawableOf))
+        }
+
+        select_fighter_next_button.setPushAndOnClick {
+            selectFighterViewModel.next()
+        }
+
+        select_fighter_previous_button.setPushAndOnClick {
+            selectFighterViewModel.back()
+        }
+
+        select_fighter_choose_button.setPushAndOnClick {
+            selectFighterViewModel.choose()
+        }
+
+        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
+            toast(getString(it))
+        }
+
+        partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
+            findNavController().navigate(it)
+        }
+
     }
 }
