@@ -33,38 +33,38 @@ class ShopFragment(private val player: Player) : DefaultFragment(R.layout.fragme
      * Initialise the given image button with the good drawable and set its click listener
      */
     private fun initImageButton(imageButton: ImageButton, attackIndex: Int) {
-        imageButton.setImageDrawable(
-            shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
-        )
-
-        imageButton.setOnClickListener {
-            // Return if the player has not enough money
-            if (player.energyLiveData.value!! < shopViewModel.attacks.value!![attackIndex].price)
-                return@setOnClickListener
-            // TODO : Apply the effect before redirect
-
-            // Buy the attack
-            player.decreaseEnergy(shopViewModel.attacks.value!![attackIndex].price)
-            // Get current attacks
-            val newAttacks: MutableList<Attack>? = shopViewModel.attacks.value?.toMutableList()
-
-            // Get available attacks in shop
-            val allPossibleAttacks = Attack.values().toMutableSet()
-            shopViewModel.attacks.value?.forEach {
-                if (shopViewModel.attacks.value!![attackIndex] != it)
-                    allPossibleAttacks.remove(it)
-            }
-
-            // Set new attack to display
-            newAttacks?.set(attackIndex, allPossibleAttacks.random())
-            shopViewModel.attacks.postValue(newAttacks!!)
-
-            imageButton.setImageDrawable(
-               shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
-            )
-
-            redirectToFightScreen()
-        }
+//        imageButton.setImageDrawable(
+//            shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
+//        )
+//
+//        imageButton.setOnClickListener {
+//            // Return if the player has not enough money
+//            if (player.energyLiveData.value!! < shopViewModel.attacks.value!![attackIndex].price)
+//                return@setOnClickListener
+//            // TODO : Apply the effect before redirect
+//
+//            // Buy the attack
+//            player.decreaseEnergy(shopViewModel.attacks.value!![attackIndex].price)
+//            // Get current attacks
+//            val newAttacks: MutableList<Attack>? = shopViewModel.attacks.value?.toMutableList()
+//
+//            // Get available attacks in shop
+//            val allPossibleAttacks = Attack.values().toMutableSet()
+//            shopViewModel.attacks.value?.forEach {
+//                if (shopViewModel.attacks.value!![attackIndex] != it)
+//                    allPossibleAttacks.remove(it)
+//            }
+//
+//            // Set new attack to display
+//            newAttacks?.set(attackIndex, allPossibleAttacks.random())
+//            shopViewModel.attacks.postValue(newAttacks!!)
+//
+//            imageButton.setImageDrawable(
+//               shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
+//            )
+//
+//            redirectToFightScreen()
+//        }
     }
 
     /**
