@@ -58,12 +58,6 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
-        <argument
-            android:name="winner"
-            app:argType="fr.learnandrun.kingofheroes.business.Hero" />
-        <argument
-            android:name="isUser"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_finalScreenFragment_to_selectFighterFragment"
             app:destination="@id/selectFighterFragment"

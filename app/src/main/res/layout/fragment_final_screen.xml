@@ -12,14 +12,15 @@
         android:id="@+id/final_screen_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:fontFamily="@font/marvel"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
-        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@id/final_screen_hero_image_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/final_screen_hero_image_view"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/final_screen_hero_image_view"
