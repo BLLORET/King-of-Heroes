@@ -3,10 +3,12 @@ package fr.learnandrun.kingofheroes.ui.final_screen
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import kotlinx.android.synthetic.main.fragment_final_screen.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -33,6 +35,18 @@ class FinalScreenFragment: DefaultFragment(R.layout.fragment_final_screen) {
         final_screen_replay_button.setOnClickListener {
             findNavController().navigate(
                 FinalScreenFragmentDirections.actionFinalScreenFragmentToSelectFighterFragment())
+        }
+
+        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
+            toast(getString(it))
+        }
+
+        partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
+            findNavController().navigate(it)
+        }
+
+        lifecycleScope.launchWhenCreated {
+            partyViewModel.fragmentLoaded()
         }
     }
 }

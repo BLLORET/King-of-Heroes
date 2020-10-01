@@ -1,25 +1,23 @@
 package fr.learnandrun.kingofheroes.view_model
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.Board
 import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.TurnLoop
 import fr.learnandrun.kingofheroes.business.User
-import fr.learnandrun.kingofheroes.business.dice.Dice
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.business.dice.DicePool
 import fr.learnandrun.kingofheroes.tools.delegate.DelegateLiveData
-import fr.learnandrun.kingofheroes.tools.delegate.DelegateNullableLiveData
 import fr.learnandrun.kingofheroes.tools.event.LiveEvent
 import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragmentDirections
 import fr.learnandrun.kingofheroes.ui.dice_screen.DiceFragmentDirections
 import fr.learnandrun.kingofheroes.ui.select_fighter_screen.SelectFighterFragmentDirections
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -31,6 +29,21 @@ class PartyViewModel: ViewModel() {
     private var job: Job? = null
     private var continuation: Continuation<Unit>? = null
     private var leaveCityContinuation: Continuation<Boolean>? = null
+    private var fragmentLoadedContinuation: Continuation<Unit>? = null
+
+    fun resumeGame() = viewModelScope.launch {
+        continuation?.let {
+            it.resume(Unit)
+            continuation = null
+        } ?: Log.d("Error", "There is nothing to continue! Continuation is null")
+    }
+    suspend fun waitForResume() {
+        if (continuation == null) {
+            suspendCoroutine<Unit> { cont ->
+                continuation = cont
+            }
+        }
+    }
 
     fun resumeLeaveCity(leaveCity: Boolean) = viewModelScope.launch {
         leaveCityContinuation?.let {
@@ -48,16 +61,16 @@ class PartyViewModel: ViewModel() {
             "You have already called this function without calling resumeLeaveCity")
     }
 
-    fun resumeGame() = viewModelScope.launch {
-        continuation?.let {
+    fun fragmentLoaded() = viewModelScope.launch {
+        fragmentLoadedContinuation?.let {
             it.resume(Unit)
-            continuation = null
-        } ?: Log.d("Error", "There is nothing to continue! Continuation is null")
+            fragmentLoadedContinuation = null
+        }
     }
-    suspend fun waitForResume() {
-        if (continuation == null) {
+    suspend fun waitForFragmentLoaded() {
+        if (fragmentLoadedContinuation == null) {
             suspendCoroutine<Unit> { cont ->
-                continuation = cont
+                fragmentLoadedContinuation = cont
             }
         }
     }
@@ -81,7 +94,7 @@ class PartyViewModel: ViewModel() {
 
     suspend fun navigate(navDirections: NavDirections) {
         navigateEvent.trigger(navDirections)
-        waitForResume()
+        waitForFragmentLoaded()
     }
     fun toast(messageId: Int) {
         toastEvent.trigger(messageId)

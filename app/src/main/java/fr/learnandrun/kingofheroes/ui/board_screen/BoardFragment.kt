@@ -97,8 +97,8 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             findNavController().navigate(it)
         }
 
-        lifecycleScope.launchWhenResumed {
-            partyViewModel.resumeGame()
+        lifecycleScope.launchWhenCreated {
+            partyViewModel.fragmentLoaded()
         }
     }
 

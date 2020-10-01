@@ -119,8 +119,8 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             findNavController().navigate(it)
         }
 
-        lifecycleScope.launchWhenResumed {
-            partyViewModel.resumeGame()
+        lifecycleScope.launchWhenCreated {
+            partyViewModel.fragmentLoaded()
         }
     }
 
