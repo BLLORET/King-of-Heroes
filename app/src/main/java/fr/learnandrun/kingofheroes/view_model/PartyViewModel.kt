@@ -155,18 +155,17 @@ class PartyViewModel: ViewModel() {
             currentPlayer = player
             delay(1000)
 
-            playTurn(player)
+            playTurn()
 
             if (playerHasWon(player)) {
-                //TODO ya un wait for resume dans navigate donc: a voir ce qu on fait
-                navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment(
-                    player.hero,
-                    player is User
-                ))
+                currentPlayer = player
+                navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment())
                 break
             }
-            if (board.playerInsideCity?.isDead() == true)
+            if (board.playerInsideCity?.isDead() == true) {
                 board.playerInsideCity = null
+                delay(1000)
+            }
         }
     }
 
@@ -175,17 +174,17 @@ class PartyViewModel: ViewModel() {
                 (player.hasEnoughPointsToWin() ||
                         board.players.filter { it != player }.all { it.isDead() })
 
-    private suspend fun playTurn(player: Player) {
+    private suspend fun playTurn() {
         if (board.playerInsideCity == currentPlayer)
             currentPlayer.victoryPoints += 2
         else if (board.playerInsideCity == null)
         {
             board.playerInsideCity = currentPlayer
             currentPlayer.victoryPoints++
+            delay(1000)
         }
 
-
-        if (!playerHasWon(player)) {
+        if (!playerHasWon(currentPlayer)) {
             rollDices()
             resolveDices()
         }
@@ -200,13 +199,16 @@ class PartyViewModel: ViewModel() {
         navigate(BoardFragmentDirections.actionBoardFragmentToDiceFragment())
 
         // wait for the player to roll its dices
-        waitForResume()
+        if (currentPlayer is User)
+            waitForResume()
+        else
+            delay(1000)
 
         diceRollRemaining--
 
         do {
             // roll dices for all null dices
-            dicePool.dices.filter { it.isSelected }.forEach { it.roll() }
+            dicePool.dices.filter { it.isSelected || it.diceFace == null }.forEach { it.roll() }
 
             // will set at null the dices to re roll
             if (currentPlayer is User) {
@@ -273,17 +275,22 @@ class PartyViewModel: ViewModel() {
             board.players.filter { it != currentPlayer }.forEach { it.health -= nbSlaps }
         else {
             playerInsideCity.health -= nbSlaps
+            if (playerInsideCity.isDead()) return
             if (playerInsideCity is User) {
                 proposeToLeaveTheCityEvent.trigger(Unit)
-                waitForLeaveCityResponse()
+                if (waitForLeaveCityResponse()) {
+                    board.playerInsideCity = null
+                    delay(1000)
+                }
             }
             else {
                 // If the IA wants to leave the city (currently driven by random)
-                if (Random.nextBoolean())
+                if (Random.nextBoolean()) {
                     board.playerInsideCity = null
+                    delay(1000)
+                }
             }
         }
     }
-
 
 }
