@@ -3,7 +3,6 @@ package fr.learnandrun.kingofheroes.ui.final_screen
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.User
@@ -45,8 +44,7 @@ class FinalScreenFragment: DefaultFragment(R.layout.fragment_final_screen) {
             findNavController().navigate(it)
         }
 
-        lifecycleScope.launchWhenCreated {
-            partyViewModel.fragmentLoaded()
-        }
+        partyViewModel.fragmentLoaded()
     }
+
 }

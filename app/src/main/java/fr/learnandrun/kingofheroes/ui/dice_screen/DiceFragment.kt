@@ -3,7 +3,6 @@ package fr.learnandrun.kingofheroes.ui.dice_screen
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.User
@@ -119,9 +118,7 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             findNavController().navigate(it)
         }
 
-        lifecycleScope.launchWhenCreated {
-            partyViewModel.fragmentLoaded()
-        }
+        partyViewModel.fragmentLoaded()
     }
 
 }

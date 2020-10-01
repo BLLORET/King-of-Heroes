@@ -95,6 +95,7 @@ class PartyViewModel: ViewModel() {
     suspend fun navigate(navDirections: NavDirections) {
         navigateEvent.trigger(navDirections)
         waitForFragmentLoaded()
+        delay(1)
     }
     fun toast(messageId: Int) {
         toastEvent.trigger(messageId)

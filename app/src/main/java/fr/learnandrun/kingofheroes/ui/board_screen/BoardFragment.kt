@@ -5,16 +5,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
-import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import fr.learnandrun.kingofheroes.business.User
-import fr.learnandrun.kingofheroes.view_model.BoardViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.ui.view.LeaveCityAlertView
 import fr.learnandrun.kingofheroes.ui.view.StatsView
+import fr.learnandrun.kingofheroes.view_model.BoardViewModel
+import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import kotlinx.android.synthetic.main.fragment_board.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -97,9 +96,7 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             findNavController().navigate(it)
         }
 
-        lifecycleScope.launchWhenCreated {
-            partyViewModel.fragmentLoaded()
-        }
+        partyViewModel.fragmentLoaded()
     }
 
 }
