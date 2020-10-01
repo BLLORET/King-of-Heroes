@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.view_model.PartyViewModel
@@ -96,7 +97,9 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             findNavController().navigate(it)
         }
 
-        partyViewModel.resumeGame()
+        lifecycleScope.launchWhenResumed {
+            partyViewModel.resumeGame()
+        }
     }
 
 }

@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import fr.learnandrun.kingofheroes.R
@@ -32,11 +30,9 @@ class LeaveCityAlertView(
     suspend fun suspendShow(): Boolean {
         val alert = AlertDialog.Builder(context).setView(this).create()
         leave_city_alert_stay_button.setOnClickListener {
-            Toast.makeText(context, "Stay", Toast.LENGTH_SHORT).show()
             alert.dismiss()
         }
         leave_city_alert_leave_button.setOnClickListener {
-            Toast.makeText(context, "Leave", Toast.LENGTH_SHORT).show()
             continuation?.resume(true)
             continuation = null
             alert.dismiss()

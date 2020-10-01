@@ -3,14 +3,15 @@ package fr.learnandrun.kingofheroes.ui.dice_screen
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
-import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
 import fr.learnandrun.kingofheroes.tools.android.setPushAndOnClick
 import fr.learnandrun.kingofheroes.tools.android.toast
 import fr.learnandrun.kingofheroes.view_model.DiceViewModel
+import fr.learnandrun.kingofheroes.view_model.PartyViewModel
 import kotlinx.android.synthetic.main.fragment_dice.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -60,6 +61,14 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             )
         }
 
+        fun updateThrowOrPass() {
+            if (partyViewModel.dicePool.dices.all { dice -> dice.diceFace == null } ||
+                partyViewModel.dicePool.dices.any { dice -> dice.isSelected })
+                dice_btn_throw.setText(R.string.btn_throw)
+            else
+                dice_btn_throw.setText(R.string.btn_pass)
+        }
+
         dicesViews.forEachIndexed { index, imageButton ->
             val dice = partyViewModel.dicePool.getDice(index)
             dice.diceFaceLive.observe(viewLifecycleOwner) {
@@ -67,14 +76,10 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             }
             dice.isSelectedLive.observe(viewLifecycleOwner) {
                 if (it)
-                    imageButton.clearColorFilter()
-                else
                     imageButton.setColorFilter(colorOf(R.color.reRollDice))
-                if (partyViewModel.dicePool.dices.all { dice -> dice.diceFace == null } ||
-                    partyViewModel.dicePool.dices.any { dice -> dice.isSelected })
-                    dice_btn_throw.setText(R.string.btn_throw)
                 else
-                    dice_btn_throw.setText(R.string.btn_pass)
+                    imageButton.clearColorFilter()
+                updateThrowOrPass()
             }
             partyViewModel.canSelectDicesLive.observe(viewLifecycleOwner) {
                 imageButton.isClickable = it
@@ -102,7 +107,9 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
 
         dice_btn_throw.setPushAndOnClick {
             diceViewModel.throwOrPass()
+            updateThrowOrPass()
         }
+
 
         partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
             toast(getString(it))
@@ -112,7 +119,9 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             findNavController().navigate(it)
         }
 
-        partyViewModel.resumeGame()
+        lifecycleScope.launchWhenResumed {
+            partyViewModel.resumeGame()
+        }
     }
 
 }
