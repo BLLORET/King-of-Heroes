@@ -18,15 +18,18 @@ class SelectFighterViewModel(val partyViewModel: PartyViewModel) : ViewModel() {
     var backArrowIsVisible by backArrowIsVisibleLive
     var nextArrowIsVisible by nextArrowIsVisibleLive
 
+    val heroNameLive = DelegateLiveData(Hero.ANT_MAN.displayNameId)
     val imageBackIdLive = DelegateNullableLiveData<Int>(null)
     val imageCurrentIdLive = DelegateNullableLiveData(Hero.values().first().imageId)
     val imageNextIdLive = DelegateNullableLiveData(Hero.values()[currentIndex + 1].imageId)
 
+    var heroName by heroNameLive
     var imageBackId by imageBackIdLive
     var imageCurrentId by imageCurrentIdLive
     var imageNextId by imageNextIdLive
 
     private fun update() {
+        heroName = Hero.atIndex(currentIndex).displayNameId
         nextArrowIsVisible = if (currentIndex != Hero.values().size - 1) View.VISIBLE else View.GONE
         backArrowIsVisible = if (currentIndex != 0) View.VISIBLE else View.GONE
         imageBackId =

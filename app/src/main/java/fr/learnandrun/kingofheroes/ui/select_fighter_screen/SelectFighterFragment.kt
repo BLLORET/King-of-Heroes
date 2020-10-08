@@ -46,6 +46,10 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
             select_fighter_right_image_view.setImageDrawable(it?.let(::drawableOf))
         }
 
+        selectFighterViewModel.heroNameLive.observe(viewLifecycleOwner) {
+            select_fighter_name_text_view.text = getString(it)
+        }
+
         select_fighter_next_button.setPushAndOnClick {
             selectFighterViewModel.next()
         }
