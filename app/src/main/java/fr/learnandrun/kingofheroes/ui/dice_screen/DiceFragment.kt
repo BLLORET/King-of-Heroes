@@ -3,6 +3,7 @@ package fr.learnandrun.kingofheroes.ui.dice_screen
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
 import fr.learnandrun.kingofheroes.business.User
@@ -25,7 +26,7 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
         super.onViewCreated(view, savedInstanceState)
 
         fun drawableOf(id: Int) = ContextCompat.getDrawable(requireContext(), id)
-        fun colorOf(id: Int) = ContextCompat.getColor(requireContext(), id)
+        fun colorOf(id: Int) = getColor(requireContext(), id)
 
         val dicesViews = listOf(
             dice_img_btn_dice_1,
@@ -45,6 +46,9 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
 
         statsViews.forEachIndexed { index, (displayText, statsView) ->
             val player = partyViewModel.board.players[index]
+            if (player == partyViewModel.board.playerInsideCity)
+                displayText.setTextColor(colorOf(R.color.marvelRed))
+
             player.healthLiveData.observe(viewLifecycleOwner) {
                 statsView.life = it
             }
