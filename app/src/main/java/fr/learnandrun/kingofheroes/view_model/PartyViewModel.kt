@@ -124,7 +124,7 @@ class PartyViewModel: ViewModel() {
             val dicesDraws = playersCompetitor.map { player ->
 
                 currentPlayer = player
-                delay(2000)
+                delay(DELAY_TIME)
 
                 // reset dices
                 dicePool.clearDices()
@@ -137,13 +137,13 @@ class PartyViewModel: ViewModel() {
                 if (currentPlayer is User)
                     waitForResume()
                 else
-                    delay(1000)
+                    delay(DELAY_TIME)
 
                 diceRollRemaining = 0
                 // roll dices
                 dicePool.dices.forEach { it.roll() }
 
-                delay(3000)
+                delay(DELAY_TIME)
 
                 // display board interface
                 navigate(DiceFragmentDirections.actionDiceFragmentToBoardFragment())
@@ -171,7 +171,7 @@ class PartyViewModel: ViewModel() {
     private suspend fun gameLoop() {
         for (player in turnLoop) {
             currentPlayer = player
-            delay(1000)
+            delay(DELAY_TIME)
 
             playTurn()
 
@@ -182,7 +182,7 @@ class PartyViewModel: ViewModel() {
             }
             if (board.playerInsideCity?.isDead() == true) {
                 board.playerInsideCity = null
-                delay(1000)
+                delay(DELAY_TIME)
             }
         }
     }
@@ -199,7 +199,7 @@ class PartyViewModel: ViewModel() {
         {
             board.playerInsideCity = currentPlayer
             currentPlayer.victoryPoints++
-            delay(1000)
+            delay(DELAY_TIME)
         }
 
         if (!playerHasWon(currentPlayer)) {
@@ -224,7 +224,7 @@ class PartyViewModel: ViewModel() {
         if (currentPlayer is User)
             waitForResume()
         else
-            delay(1000)
+            delay(DELAY_TIME)
 
         diceRollRemaining--
 
@@ -241,11 +241,11 @@ class PartyViewModel: ViewModel() {
             else {
                 dicePool.dices.forEach {
                     if (Random.nextInt(0, 4) == 0) {
-                        delay(1000)
+                        delay(DELAY_TIME)
                         it.isSelected = true
                     }
                 }
-                delay(1000)
+                delay(DELAY_TIME)
             }
 
             diceRollRemaining--
@@ -259,7 +259,7 @@ class PartyViewModel: ViewModel() {
             if (currentPlayer is User)
                 waitForResume()
             else
-                delay(1000)
+                delay(DELAY_TIME)
         }
 
         navigate(DiceFragmentDirections.actionDiceFragmentToBoardFragment())
@@ -302,14 +302,14 @@ class PartyViewModel: ViewModel() {
                 proposeToLeaveTheCityEvent.trigger(Unit)
                 if (waitForLeaveCityResponse()) {
                     board.playerInsideCity = null
-                    delay(1000)
+                    delay(DELAY_TIME)
                 }
             }
             else {
                 // If the IA wants to leave the city (currently driven by random)
                 if (Random.nextBoolean()) {
                     board.playerInsideCity = null
-                    delay(1000)
+                    delay(DELAY_TIME)
                 }
             }
         }
@@ -320,7 +320,7 @@ class PartyViewModel: ViewModel() {
         shop.openShop()
 
         // show shop interface
-        delay(1000)
+        delay(DELAY_TIME)
         navigate(BoardFragmentDirections.actionBoardFragmentToShopFragment())
 
         if (currentPlayer is User) {
@@ -330,12 +330,12 @@ class PartyViewModel: ViewModel() {
             shop.cards.forEach {
                 if (it.card.price <= currentPlayer.energy) {
                     if (Random.nextBoolean()) {
-                        delay(1000)
+                        delay(DELAY_TIME)
                         it.selectSwap(currentPlayer)
                     }
                 }
             }
-            delay(2000)
+            delay(DELAY_TIME * 2)
         }
 
         // apply cards effect
@@ -352,4 +352,7 @@ class PartyViewModel: ViewModel() {
         shop.closeShop()
     }
 
+    companion object {
+        const val DELAY_TIME: Long = 2500
+    }
 }
