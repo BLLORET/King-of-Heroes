@@ -9,11 +9,18 @@ class Shop {
         return cards[index]
     }
 
+    fun initShop() {
+        cards.forEach { it.random() }
+    }
+
     fun openShop() {
         cards.forEach {
             it.clear()
-            it.random()
         }
+    }
+
+    fun closeShop() {
+        cards.filter { it.isSelected }.forEach { it.random() }
     }
 
     companion object {

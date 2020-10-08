@@ -108,6 +108,7 @@ class PartyViewModel: ViewModel() {
         board = Board(players)
         board.playerInsideCity = null
         dicePool.reset()
+        shop.initShop()
         job?.cancel()
         job = viewModelScope.launch {
             navigate(SelectFighterFragmentDirections.actionSelectFighterFragmentToBoardFragment())
@@ -346,6 +347,9 @@ class PartyViewModel: ViewModel() {
 
         // navigate back to board fragment
         navigate(ShopFragmentDirections.actionShopFragmentToBoardFragment())
+
+        // close the shop and redraw selected cards
+        shop.closeShop()
     }
 
 }
