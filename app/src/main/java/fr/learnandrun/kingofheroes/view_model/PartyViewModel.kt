@@ -205,8 +205,8 @@ class PartyViewModel: ViewModel() {
             rollDices()
             resolveDices()
 
-            if (!playerHasWon(currentPlayer)) {
-                endTurn()
+            if (!playerHasWon(currentPlayer) && !currentPlayer.isDead()) {
+                openShop()
             }
         }
     }
@@ -314,7 +314,7 @@ class PartyViewModel: ViewModel() {
         }
     }
 
-    private suspend fun endTurn() {
+    private suspend fun openShop() {
         //open shop and get random cards
         shop.openShop()
 
