@@ -72,10 +72,6 @@ class ShopFragment : DefaultFragment(R.layout.fragment_shop) {
                 fragment_shop_stamina_text_value.text = it.toString()
             }
 
-            toastEvent.subscribe(viewLifecycleOwner) {
-                toast(getString(it))
-            }
-
             navigateEvent.subscribe(viewLifecycleOwner) {
                 findNavController().navigate(it)
             }

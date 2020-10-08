@@ -88,10 +88,6 @@ class BoardFragment : DefaultFragment(R.layout.fragment_board) {
             boardViewModel.leaveTheCity(LeaveCityAlertView(requireContext()))
         }
 
-        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
-            toast(getString(it))
-        }
-
         partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }

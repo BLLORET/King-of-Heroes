@@ -62,10 +62,6 @@ class SelectFighterFragment : DefaultFragment(R.layout.fragment_select_fighter) 
             selectFighterViewModel.choose()
         }
 
-        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
-            toast(getString(it))
-        }
-
         partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }

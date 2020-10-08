@@ -91,7 +91,6 @@ class PartyViewModel: ViewModel() {
     val currentPlayerLive = DelegateLiveData<Player>(null)
     var currentPlayer by currentPlayerLive
 
-    val toastEvent = LiveEvent<Int>()
     val navigateEvent = LiveEvent<NavDirections>()
     val proposeToLeaveTheCityEvent = LiveEvent<Unit>()
 
@@ -99,9 +98,6 @@ class PartyViewModel: ViewModel() {
         navigateEvent.trigger(navDirections)
         waitForFragmentLoaded()
         delay(1)
-    }
-    fun toast(messageId: Int) {
-        toastEvent.trigger(messageId)
     }
 
     fun initParty(players: List<Player>) {
