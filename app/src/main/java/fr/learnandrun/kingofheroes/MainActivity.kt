@@ -13,27 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupKoin()
         setContentView(R.layout.activity_main)
-    }
-
-    private fun setupKoin() {
-        val viewModelsModule = module {
-            viewModel { PartyViewModel() }
-            viewModel { (partyViewModel: PartyViewModel) -> BoardViewModel(partyViewModel) }
-            viewModel { (partyViewModel: PartyViewModel) -> DiceViewModel(partyViewModel) }
-            viewModel { (partyViewModel: PartyViewModel) -> SelectFighterViewModel(partyViewModel) }
-            viewModel { (partyViewModel: PartyViewModel) -> ShopViewModel(partyViewModel) }
-        }
-        startKoin {
-            androidContext(this@MainActivity)
-            modules(viewModelsModule)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopKoin()
     }
 
 }
