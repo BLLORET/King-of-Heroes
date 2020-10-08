@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">King Of Heroes</string>
+    <string name="black_panther">Black Panther</string>
+    <string name="dr_strange">Dr. Strange</string>
+    <string name="black_widow">Black Widow</string>
+    <string name="star_lord">Star Lord</string>
+    <string name="thor">Thor</string>
+    <string name="ant_man">Ant-Man</string>
+    <string name="aquaman">Aquaman</string>
+    <string name="batman">Batman</string>
+    <string name="captain_america">Captain America</string>
+    <string name="captain_marvel">Captain Marvel</string>
+    <string name="deadpool">Deadpool</string>
+    <string name="groot">Groot</string>
+    <string name="hawkeye">Hawkeye</string>
+    <string name="hulk">Hulk</string>
+    <string name="iron_man">Iron Man</string>
+    <string name="joker">Joker</string>
+    <string name="rocket_raccoon">Rocket Raccoon</string>
+    <string name="spider_man">Spider-Man</string>
+    <string name="superman">Superman</string>
+    <string name="wonder_woman">Wonder Woman</string>
+
+    <string name="img_desc_card_fighter">Carte d\'un combattant</string>
+    <string name="img_desc_card_power">Carte d\'un pouvoir</string>
+    <string name="img_desc_board_game">Image du plateau du jeu</string>
+    <string name="img_desc_background">Fond d\'écran</string>
+    <string name="img_desc_Dice">Image du dé</string>
+    <string name="you">\u0020(Vous)</string>
+
+    <string name="zero_value">0</string>
+    <string name="max_victory_points">%d / 20</string>
+    <string name="max_life">%d / 10</string>
+    <string name="dice_turn">%d lancer disponible</string>
+    <string name="dice_turns">%d lancers disponibles</string>
+
+    <string name="btn_throw">LANCER</string>
+    <string name="btn_validate">VALIDER</string>
+    <string name="btn_pass">PASSER</string>
+    <string name="btn_buy">ACHETER</string>
+
+    <string name="stamina_logo">Logo d\'énergie</string>
+    <string name="life_logo">Logo de vie</string>
+    <string name="victory_logo">Logo de victoire</string>
+    <string name="play">Jouer</string>
+    <string name="content_description_home_image">Fond de l\'application</string>
+    <string name="rules">Règles</string>
+    <string name="choose_your_hero">Choisissez votre hero</string>
+    <string name="choose">Choisir</string>
+    <string name="user_display_name_format">%s%s</string>
+
+    <string name="win_string">Vous êtes le king des Heros ! </string>
+    <string name="lose_string">Vous avez perdu ! </string>
+    <string name="replay">Rejouer</string>
+    <string name="character_selector_left_button">Bouton gauche de sélection de personnage</string>
+    <string name="character_selector_right_button">Bouton droit de sélection de personnage</string>
+    <string name="background_image">Image de fond</string>
+    <string name="rules_url">https://www.regledujeu.fr/king-of-tokyo/</string>
+    <string name="image_of_the_winner">Image du gagnant</string>
+    <string name="shop_buy">Acheter une attaque?</string>
+    <string name="leave_button">Partir</string>
+    <string name="stay_button">Rester</string>
+    <string name="alert_leave_city_text">Voulez-vous quitter la ville?</string>
+</resources>
