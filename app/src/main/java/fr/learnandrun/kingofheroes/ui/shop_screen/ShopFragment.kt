@@ -3,75 +3,91 @@ package fr.learnandrun.kingofheroes.ui.shop_screen
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import fr.learnandrun.kingofheroes.R
-import fr.learnandrun.kingofheroes.business.Attack
-import fr.learnandrun.kingofheroes.business.Player
+import fr.learnandrun.kingofheroes.business.User
 import fr.learnandrun.kingofheroes.view_model.ShopViewModel
 import fr.learnandrun.kingofheroes.tools.android.DefaultFragment
+import fr.learnandrun.kingofheroes.tools.android.setPushAndOnClick
+import fr.learnandrun.kingofheroes.tools.android.toast
+import fr.learnandrun.kingofheroes.view_model.PartyViewModel
+import kotlinx.android.synthetic.main.fragment_dice.*
 import kotlinx.android.synthetic.main.fragment_shop.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class ShopFragment(private val player: Player) : DefaultFragment(R.layout.fragment_shop) {
-    private lateinit var shopViewModel: ShopViewModel
+class ShopFragment : DefaultFragment(R.layout.fragment_shop) {
+
+    private val partyViewModel: PartyViewModel by sharedViewModel()
+    private val shopViewModel: ShopViewModel by viewModel { parametersOf(partyViewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO : replace this by fight context
-        shopViewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
+        fun drawableOf(id: Int) = ContextCompat.getDrawable(requireContext(), id)
+        fun colorOf(id: Int) = ContextCompat.getColor(requireContext(), id)
 
-        initImageButton(shop_first_attack_btn, 0)
-        initImageButton(shop_secund_attack_btn, 1)
-        initImageButton(shop_third_attack_btn, 2)
+        val attacksViews = listOf(
+            shop_first_attack_btn,
+            shop_secund_attack_btn,
+            shop_third_attack_btn
+        )
 
-        shop_pass_btn.setOnClickListener {
-            redirectToFightScreen()
+        fun updateBuyOrPass() {
+            if (partyViewModel.shop.cards.any { card -> card.isSelected })
+                shop_pass_btn.setText(R.string.btn_buy)
+            else
+                shop_pass_btn.setText(R.string.btn_pass)
         }
-    }
 
-    /**
-     * Initialise the given image button with the good drawable and set its click listener
-     */
-    private fun initImageButton(imageButton: ImageButton, attackIndex: Int) {
-//        imageButton.setImageDrawable(
-//            shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
-//        )
-//
-//        imageButton.setOnClickListener {
-//            // Return if the player has not enough money
-//            if (player.energyLiveData.value!! < shopViewModel.attacks.value!![attackIndex].price)
-//                return@setOnClickListener
-//            // TODO : Apply the effect before redirect
-//
-//            // Buy the attack
-//            player.decreaseEnergy(shopViewModel.attacks.value!![attackIndex].price)
-//            // Get current attacks
-//            val newAttacks: MutableList<Attack>? = shopViewModel.attacks.value?.toMutableList()
-//
-//            // Get available attacks in shop
-//            val allPossibleAttacks = Attack.values().toMutableSet()
-//            shopViewModel.attacks.value?.forEach {
-//                if (shopViewModel.attacks.value!![attackIndex] != it)
-//                    allPossibleAttacks.remove(it)
-//            }
-//
-//            // Set new attack to display
-//            newAttacks?.set(attackIndex, allPossibleAttacks.random())
-//            shopViewModel.attacks.postValue(newAttacks!!)
-//
-//            imageButton.setImageDrawable(
-//               shopViewModel.attacks.value!![attackIndex].getImage(requireContext())
-//            )
-//
-//            redirectToFightScreen()
-//        }
-    }
+        attacksViews.forEachIndexed { index, imageButton ->
+            val card = partyViewModel.shop.getCard(index)
 
-    /**
-     * Redirect to the fight screen
-     */
-    private fun redirectToFightScreen() {
-        // TODO : implement the redirection
+            card.cardLive.observe(viewLifecycleOwner) {
+                imageButton.setImageDrawable(it?.imageId?.let(::drawableOf))
+            }
+
+            card.isSelectedLive.observe(viewLifecycleOwner) {
+                if (it)
+                    imageButton.setColorFilter(colorOf(R.color.reRollDice))
+                else
+                    imageButton.clearColorFilter()
+                updateBuyOrPass()
+            }
+
+            imageButton.setPushAndOnClick {
+                shopViewModel.trySelectCard(index)
+            }
+        }
+
+        partyViewModel.apply {
+            currentPlayerLive.observe(viewLifecycleOwner) { player ->
+                shop_pass_btn.visibility = if (player is User) View.VISIBLE else View.INVISIBLE
+                shop_pass_btn.isClickable = player is User
+            }
+
+            currentPlayer.energyLiveData.observe(viewLifecycleOwner) {
+                fragment_shop_stamina_text_value.text = it.toString()
+            }
+
+            toastEvent.subscribe(viewLifecycleOwner) {
+                toast(getString(it))
+            }
+
+            navigateEvent.subscribe(viewLifecycleOwner) {
+                findNavController().navigate(it)
+            }
+        }
+
+        shopViewModel.apply {
+            shop_pass_btn.setPushAndOnClick {
+                resumeGame()
+            }
+        }
+
+        partyViewModel.fragmentLoaded()
     }
 
 }

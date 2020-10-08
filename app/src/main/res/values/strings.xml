@@ -37,6 +37,7 @@
     <string name="btn_throw">THROW</string>
     <string name="btn_validate">VALIDATE</string>
     <string name="btn_pass">PASS</string>
+    <string name="btn_buy">BUY</string>
 
     <string name="stamina_logo">Stamina Logo</string>
     <string name="life_logo">Life logo</string>

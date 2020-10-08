@@ -8,6 +8,7 @@ import fr.learnandrun.kingofheroes.business.Board
 import fr.learnandrun.kingofheroes.business.Player
 import fr.learnandrun.kingofheroes.business.TurnLoop
 import fr.learnandrun.kingofheroes.business.User
+import fr.learnandrun.kingofheroes.business.shop.Shop
 import fr.learnandrun.kingofheroes.business.dice.DiceFace
 import fr.learnandrun.kingofheroes.business.dice.DicePool
 import fr.learnandrun.kingofheroes.tools.delegate.DelegateLiveData
@@ -15,6 +16,7 @@ import fr.learnandrun.kingofheroes.tools.event.LiveEvent
 import fr.learnandrun.kingofheroes.ui.board_screen.BoardFragmentDirections
 import fr.learnandrun.kingofheroes.ui.dice_screen.DiceFragmentDirections
 import fr.learnandrun.kingofheroes.ui.select_fighter_screen.SelectFighterFragmentDirections
+import fr.learnandrun.kingofheroes.ui.shop_screen.ShopFragmentDirections
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -77,6 +79,7 @@ class PartyViewModel: ViewModel() {
 
     lateinit var board: Board
     val dicePool = DicePool()
+    val shop = Shop()
     private lateinit var turnLoop: TurnLoop
 
     val diceRollRemainingLive = DelegateLiveData(1)
@@ -201,6 +204,10 @@ class PartyViewModel: ViewModel() {
         if (!playerHasWon(currentPlayer)) {
             rollDices()
             resolveDices()
+
+            if (!playerHasWon(currentPlayer)) {
+                endTurn()
+            }
         }
     }
 
@@ -305,6 +312,40 @@ class PartyViewModel: ViewModel() {
                 }
             }
         }
+    }
+
+    private suspend fun endTurn() {
+        //open shop and get random cards
+        shop.openShop()
+
+        // show shop interface
+        delay(1000)
+        navigate(BoardFragmentDirections.actionBoardFragmentToShopFragment())
+
+        if (currentPlayer is User) {
+            waitForResume()
+        }
+        else {
+            shop.cards.forEach {
+                if (it.card.price <= currentPlayer.energy) {
+                    if (Random.nextBoolean()) {
+                        delay(1000)
+                        it.selectSwap(currentPlayer)
+                    }
+                }
+            }
+            delay(2000)
+        }
+
+        // apply cards effect
+        shop.cards.filter { it.isSelected }.forEach {
+            it.card.effect(currentPlayer,
+                board.players.filter { player -> player != currentPlayer },
+                currentPlayer == board.playerInsideCity)
+        }
+
+        // navigate back to board fragment
+        navigate(ShopFragmentDirections.actionShopFragmentToBoardFragment())
     }
 
 }

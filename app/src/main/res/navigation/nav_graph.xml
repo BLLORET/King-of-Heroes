@@ -37,6 +37,9 @@
             android:id="@+id/action_boardFragment_to_finalScreenFragment"
             app:destination="@id/finalScreenFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_boardFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
     </fragment>
     <fragment
         android:id="@+id/diceFragment"
@@ -62,5 +65,15 @@
             android:id="@+id/action_finalScreenFragment_to_selectFighterFragment"
             app:destination="@id/selectFighterFragment"
             app:popUpTo="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="fr.learnandrun.kingofheroes.ui.shop_screen.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" >
+        <action
+            android:id="@+id/action_shopFragment_to_boardFragment"
+            app:destination="@id/boardFragment"
+            app:popUpTo="@id/boardFragment" />
     </fragment>
 </navigation>

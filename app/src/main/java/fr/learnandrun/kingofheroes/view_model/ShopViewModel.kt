@@ -1,20 +1,24 @@
 package fr.learnandrun.kingofheroes.view_model
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.learnandrun.kingofheroes.business.Attack
+import fr.learnandrun.kingofheroes.business.shop.AttackCard
 
-class ShopViewModel : ViewModel() {
-    lateinit var attacks: MutableLiveData<List<Attack>>
+class ShopViewModel(val partyViewModel: PartyViewModel) : ViewModel() {
 
-    init {
-        val allAttacks = Attack.values().toMutableSet()
-        val firstAttack = allAttacks.random()
-        allAttacks.remove(firstAttack)
-        val secondAttack = allAttacks.random()
-        allAttacks.remove(secondAttack)
-        val thirdAttack = allAttacks.random()
+    val attacks: List<AttackCard> = AttackCard.values().toList()
 
-        attacks.postValue(arrayListOf(firstAttack, secondAttack, thirdAttack))
+    fun onSelect() {
+        partyViewModel.currentPlayer
+        partyViewModel.shop.getCard(0)
+    }
+
+    fun resumeGame() {
+        partyViewModel.resumeGame()
+    }
+
+    fun trySelectCard(index: Int) {
+        partyViewModel.apply {
+            shop.getCard(index).selectSwap(currentPlayer)
+        }
     }
 }

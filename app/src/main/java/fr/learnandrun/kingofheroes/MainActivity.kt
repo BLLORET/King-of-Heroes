@@ -2,10 +2,7 @@ package fr.learnandrun.kingofheroes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import fr.learnandrun.kingofheroes.view_model.PartyViewModel
-import fr.learnandrun.kingofheroes.view_model.BoardViewModel
-import fr.learnandrun.kingofheroes.view_model.DiceViewModel
-import fr.learnandrun.kingofheroes.view_model.SelectFighterViewModel
+import fr.learnandrun.kingofheroes.view_model.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -26,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             viewModel { (partyViewModel: PartyViewModel) -> BoardViewModel(partyViewModel) }
             viewModel { (partyViewModel: PartyViewModel) -> DiceViewModel(partyViewModel) }
             viewModel { (partyViewModel: PartyViewModel) -> SelectFighterViewModel(partyViewModel) }
+            viewModel { (partyViewModel: PartyViewModel) -> ShopViewModel(partyViewModel) }
         }
         startKoin {
             androidContext(this@MainActivity)
