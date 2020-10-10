@@ -180,10 +180,6 @@ class PartyViewModel: ViewModel() {
                 navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment())
                 break
             }
-            if (board.playerInsideCity?.isDead() == true) {
-                board.playerInsideCity = null
-                delay(DELAY_TIME)
-            }
         }
     }
 
@@ -301,7 +297,10 @@ class PartyViewModel: ViewModel() {
             board.players.filter { it != currentPlayer }.forEach { it.health -= nbSlaps }
         else {
             playerInsideCity.health -= nbSlaps
-            if (playerInsideCity.isDead()) return
+            if (playerInsideCity.isDead()) {
+                board.playerInsideCity = null
+                return
+            }
             if (playerInsideCity is User) {
                 proposeToLeaveTheCityEvent.trigger(Unit)
                 if (waitForLeaveCityResponse()) {
@@ -353,12 +352,16 @@ class PartyViewModel: ViewModel() {
         shop.currentSelectedCard?.card?.effect?.invoke(currentPlayer,
             board.players.filter { player -> player != currentPlayer },
             currentPlayer == board.playerInsideCity)
+        if (board.playerInsideCity?.isDead() == true) {
+            board.playerInsideCity = null
+            delay(DELAY_TIME)
+        }
 
         // close the shop and redraw selected cards
         shop.closeShop()
     }
 
     companion object {
-        const val DELAY_TIME: Long = 2500
+        const val DELAY_TIME: Long = 2000
     }
 }
