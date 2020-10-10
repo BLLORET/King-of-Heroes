@@ -57,6 +57,10 @@ class ShopFragment : DefaultFragment(R.layout.fragment_shop) {
                 updateBuyOrPass()
             }
 
+            partyViewModel.canSelectCardLive.observe(viewLifecycleOwner) {
+                imageButton.isClickable = it
+            }
+
             imageButton.setPushAndOnClick {
                 shopViewModel.trySelectCard(index)
             }

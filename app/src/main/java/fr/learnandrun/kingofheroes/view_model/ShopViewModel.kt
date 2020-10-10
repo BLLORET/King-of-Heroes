@@ -18,7 +18,8 @@ class ShopViewModel(val partyViewModel: PartyViewModel) : ViewModel() {
 
     fun trySelectCard(index: Int) {
         partyViewModel.apply {
-            shop.getCard(index).selectSwap(currentPlayer)
+            if (partyViewModel.currentPlayer.energy >= shop.getCard(index).card.price)
+                shop.selectCard(index)
         }
     }
 }

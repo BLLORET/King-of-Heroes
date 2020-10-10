@@ -86,7 +86,10 @@ class PartyViewModel: ViewModel() {
     var diceRollRemaining: Int by diceRollRemainingLive
 
     val canSelectDicesLive = DelegateLiveData(false)
-    var canSelectDices by canSelectDicesLive
+    private var canSelectDices by canSelectDicesLive
+
+    val canSelectCardLive = DelegateLiveData(false)
+    private var canSelectCard by canSelectCardLive
 
     val currentPlayerLive = DelegateLiveData<Player>(null)
     var currentPlayer by currentPlayerLive
@@ -177,6 +180,7 @@ class PartyViewModel: ViewModel() {
 
             if (playerHasWon(player)) {
                 currentPlayer = player
+                delay(DELAY_TIME)
                 navigate(BoardFragmentDirections.actionBoardFragmentToFinalScreenFragment())
                 break
             }
@@ -287,6 +291,8 @@ class PartyViewModel: ViewModel() {
         dicePool.dices.filter { it.diceFace == diceFace }.count()
 
     private suspend fun slapPlayers() {
+        delay(DELAY_TIME)
+
         val nbSlaps = countDice(DiceFace.SLAP)
         // Check all conditions to slap
         if (nbSlaps <= 0) return
@@ -324,29 +330,31 @@ class PartyViewModel: ViewModel() {
         navigate(BoardFragmentDirections.actionBoardFragmentToShopFragment())
 
         if (currentPlayer is User) {
+            canSelectCard = true
             waitForResume()
+            canSelectCard = false
         }
         else {
-            shop.cards.forEach {
-                if (it.card.price <= currentPlayer.energy) {
+            shop.cards.forEachIndexed { index, card ->
+                if (card.card.price <= currentPlayer.energy) {
                     if (Random.nextBoolean()) {
                         delay(DELAY_TIME)
-                        it.selectSwap(currentPlayer)
+                        shop.selectCard(index)
                     }
                 }
             }
-            delay(DELAY_TIME * 2)
-        }
-
-        // apply cards effect
-        shop.cards.filter { it.isSelected }.forEach {
-            it.card.effect(currentPlayer,
-                board.players.filter { player -> player != currentPlayer },
-                currentPlayer == board.playerInsideCity)
+            delay(DELAY_TIME)
         }
 
         // navigate back to board fragment
         navigate(ShopFragmentDirections.actionShopFragmentToBoardFragment())
+
+        // buy the selected card
+        currentPlayer.energy -= shop.currentSelectedCard?.card?.price ?: 0
+        // apply selected card effect
+        shop.currentSelectedCard?.card?.effect?.invoke(currentPlayer,
+            board.players.filter { player -> player != currentPlayer },
+            currentPlayer == board.playerInsideCity)
 
         // close the shop and redraw selected cards
         shop.closeShop()
