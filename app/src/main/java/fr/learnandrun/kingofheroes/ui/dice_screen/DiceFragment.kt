@@ -113,11 +113,6 @@ class DiceFragment : DefaultFragment(R.layout.fragment_dice) {
             updateThrowOrPass()
         }
 
-
-        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
-            toast(getString(it))
-        }
-
         partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }

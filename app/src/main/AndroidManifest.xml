@@ -3,6 +3,7 @@
     package="fr.learnandrun.kingofheroes">
 
     <application
+        android:name=".KingOfHeroesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon_launcher"
         android:label="@string/app_name"
@@ -12,7 +13,6 @@
         <activity android:name="fr.learnandrun.kingofheroes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

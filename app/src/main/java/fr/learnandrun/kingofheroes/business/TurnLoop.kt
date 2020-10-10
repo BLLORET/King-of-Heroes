@@ -25,8 +25,6 @@ class TurnLoop(
 
     fun isFirstTurn(): Boolean = actualTurn == 1
 
-    fun getActualRound(): Int = actualRound
-
     override fun iterator(): Iterator<Player> {
         return this
     }

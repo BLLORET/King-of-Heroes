@@ -36,10 +36,6 @@ class FinalScreenFragment: DefaultFragment(R.layout.fragment_final_screen) {
                 FinalScreenFragmentDirections.actionFinalScreenFragmentToSelectFighterFragment())
         }
 
-        partyViewModel.toastEvent.subscribe(viewLifecycleOwner) {
-            toast(getString(it))
-        }
-
         partyViewModel.navigateEvent.subscribe(viewLifecycleOwner) {
             findNavController().navigate(it)
         }
