@@ -195,19 +195,21 @@ class PartyViewModel: ViewModel() {
     private suspend fun playTurn() {
         if (board.playerInsideCity == currentPlayer)
             currentPlayer.victoryPoints += 2
-        else if (board.playerInsideCity == null)
-        {
-            board.playerInsideCity = currentPlayer
-            currentPlayer.victoryPoints++
-            delay(DELAY_TIME)
-        }
 
         if (!playerHasWon(currentPlayer)) {
             rollDices()
             resolveDices()
 
-            if (!playerHasWon(currentPlayer) && !currentPlayer.isDead()) {
-                openShop()
+            if (!playerHasWon(currentPlayer)) {
+                if (board.playerInsideCity == null) {
+                    board.playerInsideCity = currentPlayer
+                    currentPlayer.victoryPoints++
+                    delay(DELAY_TIME)
+                }
+
+                if (!playerHasWon(currentPlayer)) {
+                    openShop()
+                }
             }
         }
     }
